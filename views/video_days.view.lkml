@@ -19,7 +19,6 @@ view: video_days {
         video_id IS NOT NULL
       GROUP BY
         1
-      HAVING Post_Date > "2019-08-15"
        ;;
   }
 
@@ -50,13 +49,12 @@ view: video_days {
   dimension: days_since_post {
     hidden: yes
     type: number
-    sql: DATE_DIFF(${channel_basic_a2_daily_first._data_raw},${post_date_date},day)
- ;;
+    sql: DATE_DIFF(${channel_basic_a2_daily_first._data_raw},${post_date_date},day) ;;
   }
   dimension: days_after_post {
     type: number
-    sql: CASE WHEN ${days_since_post} > 14 THEN null
-    ELSE ${days_since_post} END;;
+    sql: ${days_since_post};;
+    html: {{value}} days ;;
   }
 
   dimension: views {

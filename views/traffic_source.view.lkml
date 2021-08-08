@@ -69,7 +69,7 @@ view: traffic_source {
   dimension: average_view_duration_percentage {
     type: number
     sql: ${TABLE}.average_view_duration_percentage  ;;
-    value_format: "0.xx%"
+    value_format: "0.xx\%"
   }
 
   # # You can specify the table name if it's different from the view name:

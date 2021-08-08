@@ -48,6 +48,22 @@ explore: series_analysis {
 }
 
 explore: channel_basic_a2_daily_first {
+  query: subscriber_views {
+    dimensions: [channel_basic_a2_daily_first.subscribed_status]
+    measures: [channel_basic_a2_daily_first.views]
+    sorts: [channel_basic_a2_daily_first.subscribed_status: desc]
+  }
+  query: age_views {
+    dimensions: [demographics_dt.age_group]
+    measures: [demographics_dt.count]
+    sorts: [demographics_dt.count: desc]
+    filters: []
+  }
+  query: traffic_source {
+    dimensions: [traffic.traffic_source]
+    measures: [traffic.views]
+    sorts: [traffic.views: desc ]
+  }
   label: "Master Explore"
   aggregate_table: views_last_7_days {
     query:  {
@@ -84,6 +100,12 @@ explore: channel_basic_a2_daily_first {
     AND ${channel_basic_a2_daily_first._data_date} = ${playback._data_date} ;;
     relationship: many_to_many
   }
+  join: traffic {
+    from: traffic_source
+    type: left_outer
+    sql_on: ${traffic.video_id} = ${video_info.video_id} ;;
+    relationship: one_to_many
+    }
 }
 
 

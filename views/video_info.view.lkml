@@ -22,15 +22,6 @@ view: video_info {
     intervals: [year, week, day] # valid intervals described below
   }
 
-  dimension: union_test {
-    sql: (
-    SELECT DISTINCT video_id
-    FROM video_info
-    UNION DISTINCT
-    SELECT  video_url
-    FROM video_info) ;;
-  }
-
   dimension: video_id {
     primary_key: yes
     hidden: yes
@@ -60,11 +51,28 @@ view: video_info {
     }
   }
 
+  dimension: full_name {
+    sql: ${TABLE}.video_name ;;
+}
+
+  dimension: remove_kaigai {
+    hidden: yes
+       sql: TRIM(SUBSTR(replace(${full_name},"【海外の反応 アニメ】",""),0,STRPOS(replace(${full_name},"【海外の反応 アニメ】",""),"話"))) ;;
+  }
+
+  dimension: remove_pieter {
+    hidden: yes
+    sql: TRIM(SUBSTR(replace(${remove_kaigai},"ピーターの反応",""),0,STRPOS(replace(${remove_kaigai},"ピーターの反応",""),"話"))) ;;
+  }
+
+  dimension: remove_bracket {
+    hidden: yes
+    sql: TRIM(SUBSTR(replace(${remove_pieter},"【】",""),0,STRPOS(replace(${remove_pieter},"【】",""),"話"))) ;;
+  }
+
   dimension: video_name {
     type: string
-#      sql: ${TABLE}.video_name ;;
-       sql: TRIM(SUBSTR(replace(${TABLE}.video_name,"【海外の反応 アニメ】",""),0,STRPOS(replace(${TABLE}.video_name,"【海外の反応 アニメ】",""),"話")))
-  --    OR TRIM(SUBSTR(replace(${TABLE}.video_name,"ピーターの反応",""),0,STRPOS(replace(${TABLE}.video_name,"ピーターの反応",""),"話")))
+       sql: ${remove_bracket}
       ;;
     link: {
       label: "Video URL"
@@ -75,6 +83,13 @@ view: video_info {
       url: "/dashboards/6?Video_Name={{filterable_value | url_encode}}"
       icon_url: "https://image.flaticon.com/icons/png/512/87/87578.png"
     }
+  }
+
+  dimension: full_or_short {
+    label: "Post - Video Name"
+    sql:
+    case when ${video_name} = "" then ${full_name}
+         else ${video_name} end;;
   }
 
   dimension: episode {
@@ -145,7 +160,7 @@ view: video_info {
     sql: ${TABLE}.anime_title ;;
     link: {
       label: "Video Series Dashboard"
-      url: "/dashboards/8?Title={{filterable_value | url_encode}}"
+      url: "/dashboards-next/1?Title={{filterable_value | url_encode}}"
       icon_url: "https://image.flaticon.com/icons/png/512/87/87578.png"
     }
     drill_fields: [video_name,Basic.video_stats*]
@@ -161,7 +176,7 @@ view: video_info {
     hidden: yes
     sql: ${title} ;;
     html:
-    <a href="/dashboards/8?Title={{ filterable_value }}&">{{ filterable_value }}</a> ;;
+    <a href="/dashboards-next/1?Title={{ filterable_value }}&">{{ filterable_value }}</a> ;;
   }
 
 
@@ -270,87 +285,3 @@ view: video_info {
     html: this is my text {{ _filters['video_info.title'] }} its from the filter ;;
   }
 }
-#Below is my failed attempt to embed youtube videos in looker
-
-#   dimension: video_play {
-#     type: string
-#     sql: ${video_name} ;;
-#     html:<iframe width=“320” height=“240"
-#     <src=“https://www.youtube.com/{{video_id | url_encode}}”></iframe> ;;
-#   }
-#
-# #
-# #   html:<video width=“320” height=“240" controls>
-# #   <source src=“https://www.w3schools.com/tags/movie.mp4” type=“video/mp4">
-# #   <source src=“movie.ogg” type=“video/ogg”>
-# #   </video>
-# #   <p><strong>Note:</strong> The video tag is not supported in Internet Explorer 8 and earlier versions.</p> ;;
-# # }
-#   # # You can specify the table name if it's different from the view name:
-#   # sql_table_name: my_schema_name.tester ;;
-  #
-  # # Define your dimensions and measures here, like this:
-  # dimension: user_id {
-  #   description: "Unique ID for each user that has ordered"
-  #   type: number
-  #   sql: ${TABLE}.user_id ;;
-  # }
-  #
-  # dimension: lifetime_orders {
-  #   description: "The total number of orders for each user"
-  #   type: number
-  #   sql: ${TABLE}.lifetime_orders ;;
-  # }
-  #
-  # dimension_group: most_recent_purchase {
-  #   description: "The date when each user last ordered"
-  #   type: time
-  #   timeframes: [date, week, month, year]
-  #   sql: ${TABLE}.most_recent_purchase_at ;;
-  # }
-  #
-  # measure: total_lifetime_orders {
-  #   description: "Use this for counting lifetime orders across many users"
-  #   type: sum
-  #   sql: ${lifetime_orders} ;;
-  # }
-#}
-
-# view: video_info {
-#   # Or, you could make this view a derived table, like this:
-#   derived_table: {
-#     sql: SELECT
-#         user_id as user_id
-#         , COUNT(*) as lifetime_orders
-#         , MAX(orders.created_at) as most_recent_purchase_at
-#       FROM orders
-#       GROUP BY user_id
-#       ;;
-#   }
-#
-#   # Define your dimensions and measures here, like this:
-#   dimension: user_id {
-#     description: "Unique ID for each user that has ordered"
-#     type: number
-#     sql: ${TABLE}.user_id ;;
-#   }
-#
-#   dimension: lifetime_orders {
-#     description: "The total number of orders for each user"
-#     type: number
-#     sql: ${TABLE}.lifetime_orders ;;
-#   }
-#
-#   dimension_group: most_recent_purchase {
-#     description: "The date when each user last ordered"
-#     type: time
-#     timeframes: [date, week, month, year]
-#     sql: ${TABLE}.most_recent_purchase_at ;;
-#   }
-#
-#   measure: total_lifetime_orders {
-#     description: "Use this for counting lifetime orders across many users"
-#     type: sum
-#     sql: ${lifetime_orders} ;;
-#   }
-# }
