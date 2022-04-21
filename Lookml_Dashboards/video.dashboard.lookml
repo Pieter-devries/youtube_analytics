@@ -12,7 +12,7 @@
       channel_basic_a2_daily_first.avg_watch_time]
     sorts: [channel_basic_a2_daily_first._data_date desc]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     x_axis_gridlines: false
     y_axis_gridlines: false
     show_view_names: false
@@ -65,7 +65,7 @@
       channel_basic_a2_daily_first.dislikes]
     sorts: [channel_basic_a2_daily_first._data_date desc]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     x_axis_gridlines: true
     y_axis_gridlines: false
     show_view_names: false
@@ -122,7 +122,7 @@
     fields: [channel_basic_a2_daily_first._data_date, channel_basic_a2_daily_first.comments]
     sorts: [channel_basic_a2_daily_first._data_date desc]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     x_axis_gridlines: false
     y_axis_gridlines: false
     show_view_names: false
@@ -164,7 +164,7 @@
     fields: [channel_basic_a2_daily_first._data_date, channel_basic_a2_daily_first.shares]
     sorts: [channel_basic_a2_daily_first._data_date desc]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     x_axis_gridlines: false
     y_axis_gridlines: false
     show_view_names: false
@@ -236,7 +236,7 @@
         video_days.days_after_post: NOT NULL
       sorts: [channel_basic_a2_daily_first.views desc]
       limit: 500
-      query_timezone: America/Los_Angeles
+
       join_fields: []
     - model: thesis_cool
       explore: channel_basic_a2_daily_first
@@ -247,7 +247,7 @@
       sorts: [channel_basic_a2_daily_first.view_per_video desc]
       limit: 500
       column_limit: 50
-      query_timezone: America/Los_Angeles
+
       join_fields:
       - field_name: video_days.days_after_post
         source_field_name: video_days.days_after_post

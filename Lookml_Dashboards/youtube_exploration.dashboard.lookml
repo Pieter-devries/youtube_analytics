@@ -2,7 +2,6 @@
   title: Youtube_Data_Exploration
   layout: newspaper
   preferred_viewer: dashboards
-  query_timezone: user_timezone
   embed_style:
     background_color: "#f6f8fa"
     show_title: true
@@ -24,7 +23,7 @@
       channel_basic_a2_daily_first.video_id: "-NULL"
     sorts: [channel_basic_a2_daily_first.key_points desc]
     limit: 20
-    query_timezone: America/Los_Angeles
+
     show_view_names: false
     show_row_numbers: true
     transpose: false
@@ -113,7 +112,7 @@
       video_info.thumbnail: "-NULL"
     sorts: [channel_basic_a2_daily_first.subscribers_gained desc 0, channel_basic_a2_daily_first.subscribers_lost]
     limit: 10
-    query_timezone: America/Los_Angeles
+
     x_axis_gridlines: true
     y_axis_gridlines: false
     show_view_names: false
@@ -169,7 +168,7 @@
       channel_basic_a2_daily_first.subscribers_lost: ">0"
     sorts: [channel_basic_a2_daily_first.subscribers_lost desc]
     limit: 10
-    query_timezone: America/Los_Angeles
+
     x_axis_gridlines: true
     y_axis_gridlines: false
     show_view_names: false
@@ -409,7 +408,7 @@
       channel_basic_a2_daily_first.shares, channel_basic_a2_daily_first.key_points]
     sorts: [channel_basic_a2_daily_first.key_points desc]
     limit: 20
-    query_timezone: America/Los_Angeles
+
     show_view_names: false
     show_row_numbers: true
     transpose: false
@@ -624,7 +623,7 @@
     fill_fields: [channel_basic_a2_daily_first._data_date]
     sorts: [sharing.sharingservice, channel_basic_a2_daily_first._data_date desc]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -669,7 +668,7 @@
     fields: [sharing.count, sharing.sharingservice]
     sorts: [sharing.count desc]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     series_types: {}
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
@@ -738,7 +737,7 @@
           Video, expression: "${channel_basic_a2_daily_first.key_points}/${genre_total.count}",
         value_format: !!null '', value_format_name: decimal_0, _kind_hint: measure,
         _type_hint: number}]
-    query_timezone: America/Los_Angeles
+
     column_order: ["$$$_row_numbers_$$$", genre_total.genre, channel_basic_a2_daily_first.subscriber_change,
       view_per_video, like_per_video, subs_per_video, shares_per_video, watched_hours_per_video]
     show_view_names: false
@@ -794,7 +793,7 @@
       traffic_source.traffic_source_detail: "-NULL"
     sorts: [traffic_source.views desc]
     limit: 50
-    query_timezone: America/Los_Angeles
+
     color_application: undefined
     show_view_names: false
     show_row_numbers: true
@@ -824,7 +823,7 @@
       traffic_source.traffic_source: Youtube Search
       traffic_source.traffic_source_detail: "-NULL"
     limit: 50
-    query_timezone: America/Los_Angeles
+
     color_application: undefined
     show_view_names: false
     show_row_numbers: true

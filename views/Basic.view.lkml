@@ -19,15 +19,6 @@ view: channel_basic_a2_daily_first {
 
   drill_fields: [_data_date,country_code,views]
 
-  filter: number_filter {
-    type: number
-    default_value: ">="
-  }
-  filter: date_filter {
-    type: date
-    default_value: ""
-  }
-
   dimension: prim_key {
     hidden: yes
     type: number
@@ -119,14 +110,6 @@ view: channel_basic_a2_daily_first {
     sql: date_diff(${the_latest_date},${the_earliest_date},day) ;;
   }
 
-#   dimension_group: up_time {
-#     type: duration
-#     intervals: [day,week, year]
-#     sql_start: ${the_earliest_date} ;;
-#     sql_end: ${the_latest_date} ;;
-#   }
-
-
   dimension_group: _latest {
     hidden: yes
     type: time
@@ -143,25 +126,7 @@ view: channel_basic_a2_daily_first {
     sql: ${TABLE}._LATEST_DATE ;;
   }
 
-  dimension: test_vid {
-    label: "{% if _model._name == 'thelook' %} dontworry {% else %} superlongteststuff {% endif %}"
-    type: string
-    sql: ${video_id} ;;
-    drill_fields: [detail*]
-    link: {
-      url:"{{link}}&sorts=genre_total.genre+desc"
-      }
-  }
 
-  measure: testing_views {
-    label: "{% if _model._name == 'thelook' %} dontworry {% else %} superlongteststuff {% endif %}"
-    type: sum
-    sql: ${view_num} ;;
-    drill_fields: [detail*]
-    link: {
-      url:"{{link}}&sorts=genre_total.genre+desc"
-    }
-  }
 
   set: detail {
     fields: [video_info.title,genre_total.genre,views,comments]
@@ -272,15 +237,7 @@ view: channel_basic_a2_daily_first {
     group_label: "Likes"
     type: sum
     sql: ${TABLE}.likes ;;
-#     html:
-#     {% if value > target_id._parameter_value %}
-#     {{ '*' | append: value }}
-#     {% else %}
-#     {{ value }}
-#     {% endif %}
-#     ;;
-  }
-
+}
   parameter: target_id {
     type: number
   }

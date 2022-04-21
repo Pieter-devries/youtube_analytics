@@ -11,7 +11,7 @@
     fields: [video_info.title]
     sorts: [video_info.title]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     custom_color_enabled: true
     show_single_value_title: false
     show_comparison: false
@@ -43,7 +43,7 @@
     sorts: [channel_basic_a2_daily_first.subscriber_change desc]
     limit: 20
     column_limit: 50
-    query_timezone: America/Los_Angeles
+
     column_order: ["$$$_row_numbers_$$$", video_info.video_name, channel_basic_a2_daily_first.subscripter_change,
       channel_basic_a2_daily_first.views, channel_basic_a2_daily_first.avg_watch_time,
       channel_basic_a2_daily_first.watch_time_minutes, channel_basic_a2_daily_first.comments,
@@ -305,7 +305,7 @@
     type: single_value
     fields: [video_info.genre1]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     custom_color_enabled: true
     show_single_value_title: false
     show_comparison: false
@@ -331,7 +331,7 @@
     fields: [video_info.genre2]
     sorts: [video_info.genre2]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     custom_color_enabled: true
     show_single_value_title: false
     show_comparison: false
@@ -357,7 +357,7 @@
     fields: [video_info.genre3]
     sorts: [video_info.genre3]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     custom_color_enabled: true
     show_single_value_title: false
     show_comparison: false
@@ -450,7 +450,7 @@
           \    pivot_row(\n      running_total(${channel_basic_a2_daily_first.views})\n\
           \      )\n    )", value_format: !!null '', value_format_name: !!null '',
         _kind_hint: supermeasure, _type_hint: number}]
-    query_timezone: America/Los_Angeles
+
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -516,7 +516,7 @@
     fields: [video_info.genre4]
     sorts: [video_info.genre4]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     custom_color_enabled: true
     show_single_value_title: false
     show_comparison: false
@@ -544,7 +544,7 @@
       video_info.title_pic: "-NULL"
     sorts: [video_info.title_pic]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     custom_color_enabled: true
     show_single_value_title: false
     show_comparison: false
@@ -575,7 +575,7 @@
       channel_basic_a2_daily_first.metric_chooser: NOT NULL
     sorts: [channel_basic_a2_daily_first._data_date desc, video_info.video_name]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     listen:
       Title: video_info.title
       Parameter: channel_basic_a2_daily_first.dynamic_measure
@@ -594,7 +594,7 @@
     fill_fields: [channel_basic_a2_daily_first._data_date]
     sorts: [sharing.sharingservice, channel_basic_a2_daily_first._data_date desc]
     limit: 500
-    query_timezone: America/Los_Angeles
+
     series_types: {}
     listen:
       Title: video_info.title
