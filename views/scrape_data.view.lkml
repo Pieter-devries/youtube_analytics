@@ -1,6 +1,6 @@
 view: scrape_data {
   derived_table: {
-  sql_trigger_value: COUNT(*) FROM `thesis-project-252601.YoutubeData.scrape_data`;;
+  sql_trigger_value: 1;;
   sql:
   SELECT *
   FROM `thesis-project-252601.YoutubeData.scrape_data`
