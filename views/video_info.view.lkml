@@ -107,27 +107,6 @@ view: video_info {
   }
 
   ###test_stuff
-  measure: test_count {
-    type: count
-    link: {
-      label: "Video URL"
-      url: "https://www.youtube.com/watch?v={{ _filters['video_info.video_id'] | url_encode}}"
-    }
-    html:
-    {% if value > 10 %}
-    <div style="color: black; font-size:100%; text-align:right;">{{rendered_value}}</div>
-    {% else %}
-    <div style="color: black; font-size:100%; text-align:right; font-weight:bold"><a href={{ link }} target="_top">{{ rendered_value }}</a></div>
-    {% endif %}
-    ;;
-  }
-  ###test_stuff
-
-  measure: test_thumb {
-    type: count
-    html:   html: <img src="{{video_info.thumbnail}}" width=75 height=50 border=0 />  ;;
-  }
-
   dimension: thumb_url {
     sql: ${thumbnail} ;;
   }
@@ -278,10 +257,5 @@ view: video_info {
   measure: comment_num{
     type: sum
     sql: ${TABLE}.comment_num ;;
-  }
-
-  dimension: test_html {
-    sql: 1 ;;
-    html: this is my text {{ _filters['video_info.title'] }} its from the filter ;;
   }
 }

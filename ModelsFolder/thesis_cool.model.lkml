@@ -72,6 +72,11 @@ explore: channel_basic_a2_daily_first {
       }
       materialization: {datagroup_trigger:youtube_transfer}
       }
+  join: scrape_data {
+    type: left_outer
+    sql_on: ${scrape_data.video_id} = ${channel_basic_a2_daily_first.video_id} ;;
+    relationship: many_to_one
+  }
   join: video_info {
     type: left_outer
     sql_on: ${video_info.video_id} = ${channel_basic_a2_daily_first.video_id} ;;
