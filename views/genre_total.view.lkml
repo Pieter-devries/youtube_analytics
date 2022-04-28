@@ -11,7 +11,7 @@ view: genre_total {
   dimension: genre {
     type: string
     sql: ${TABLE}.genre ;;
-    drill_fields: [video_info.title,video_info.video_name,Basic.vid_stats*]
+    drill_fields: [scrape_data.playlist_name,scrape_data.video_name,Basic.vid_stats*]
   }
 
   dimension: genre1 {

@@ -2,7 +2,7 @@ explore: ndt_persisted {}
 view: ndt_persisted {
     derived_table: {
       explore_source: channel_basic_a2_daily_first {
-        column: title { field: video_info.title }
+        column: title { field: scrape_data.playlist_name }
         column: views {}
       }
       sql_trigger_value: SELECT FORMAT_TIMESTAMP('%F', CURRENT_TIMESTAMP(), 'America/Los_Angeles') ;;

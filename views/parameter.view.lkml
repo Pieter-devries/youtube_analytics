@@ -1,4 +1,0 @@
-view: parameter {
-parameter: bob {}
-
- }

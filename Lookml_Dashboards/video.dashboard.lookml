@@ -49,9 +49,6 @@
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
-    listen:
-      Video_Name: video_info.video_name
-      Date Filter: channel_basic_a2_daily_first._data_date
     row: 7
     col: 16
     width: 8
@@ -107,9 +104,6 @@
     show_null_points: true
     interpolation: linear
     title_hidden: true
-    listen:
-      Video_Name: video_info.video_name
-      Date Filter: channel_basic_a2_daily_first._data_date
     row: 2
     col: 8
     width: 8
@@ -149,9 +143,6 @@
     swap_axes: false
     show_null_points: true
     interpolation: linear
-    listen:
-      Video_Name: video_info.video_name
-      Date Filter: channel_basic_a2_daily_first._data_date
     row: 7
     col: 8
     width: 4
@@ -195,9 +186,6 @@
     swap_axes: false
     show_null_points: true
     interpolation: linear
-    listen:
-      Video_Name: video_info.video_name
-      Date Filter: channel_basic_a2_daily_first._data_date
     row: 7
     col: 12
     width: 4
@@ -207,7 +195,7 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: single_value
-    fields: [video_info.title]
+    fields: [scrape_data.cleaned_name]
     filters:
       channel_basic_a2_daily_first.video_id: "-NULL"
     limit: 1
@@ -219,8 +207,6 @@
     comparison_reverse_colors: false
     show_comparison_label: true
     series_types: {}
-    listen:
-      Video_Name: video_info.video_name
     row: 0
     col: 0
     width: 4
@@ -300,9 +286,6 @@
     dynamic_fields: [{table_calculation: vs_average, label: "% vs Average", expression: "${channel_basic_a2_daily_first.views}/${channel_basic_a2_daily_first.view_per_video}",
         value_format: !!null '', value_format_name: percent_1, _kind_hint: measure,
         _type_hint: number}]
-    listen:
-    - Video_Name: video_info.video_name
-    -
     row: 12
     col: 8
     width: 8
@@ -318,8 +301,6 @@
     series_types: {}
     hidden_fields: []
     y_axes: []
-    listen:
-      Video_Name: video_info.video_name
     row: 0
     col: 4
     width: 4
@@ -389,9 +370,6 @@
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
-    listen:
-      Video_Name: video_info.video_name
-      Date Filter: channel_basic_a2_daily_first._data_date
     row: 2
     col: 16
     width: 8
@@ -416,9 +394,6 @@
     series_types: {}
     hidden_fields: []
     y_axes: []
-    listen:
-      Video_Name: video_info.video_name
-      Date Filter: channel_basic_a2_daily_first._data_date
     row: 0
     col: 16
     width: 8
@@ -440,9 +415,6 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     series_types: {}
-    listen:
-      Video_Name: video_info.video_name
-      Date Filter: channel_basic_a2_daily_first._data_date
     row: 0
     col: 8
     width: 8
@@ -461,60 +433,10 @@
     label_type: name_value
     show_null_points: true
     series_types: {}
-    listen:
-      Video_Name: video_info.video_name
-      Date Filter: demographics_dt._data_date
     row: 12
     col: 16
     width: 8
     height: 6
-  - title: Thumbnail (copy)
-    name: Thumbnail (copy)
-    model: thesis_cool
-    explore: channel_basic_a2_daily_first
-    type: single_value
-    fields: [video_info.title_pic]
-    limit: 1
-    custom_color_enabled: true
-    show_single_value_title: false
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen:
-      Video_Name: video_info.video_name
-    row: 2
-    col: 4
-    width: 4
-    height: 3
-  - title: Thumbnail (copy 2)
-    name: Thumbnail (copy 2)
-    model: thesis_cool
-    explore: channel_basic_a2_daily_first
-    type: single_value
-    fields: [video_info.episode_pic]
-    limit: 1
-    custom_color_enabled: true
-    show_single_value_title: false
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen:
-      Video_Name: video_info.video_name
-    row: 2
-    col: 0
-    width: 4
-    height: 3
-  filters:
   - name: Video_Name
     title: Video_Name
     type: field_filter
@@ -526,8 +448,7 @@
       display: popover
     model: thesis_cool
     explore: channel_basic_a2_daily_first
-    listens_to_filters: []
-    field: video_info.video_name
+    field: scrape_data.video_name
   - name: Date Filter
     title: Date Filter
     type: date_filter

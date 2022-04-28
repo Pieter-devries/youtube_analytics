@@ -4,7 +4,7 @@ view: LAG_TEST {
           SELECT *, LAG(published_date) OVER
           (PARTITION by genre_1 ORDER BY published_date ASC) as previous
 
-          FROM video_info ;;
+          FROM scrape_data ;;
   }
 
   dimension: video_id {

@@ -27,12 +27,12 @@ explore: series_analysis {
   from: channel_basic_a2_daily_first
   always_filter: {
     filters: [
-      video_info.title: "鬼滅の刃"
+      scrape_data.playlist_name: "鬼滅の刃"
     ]
   }
-  join: video_info {
+  join: scrape_data {
     type: left_outer
-    sql_on: ${video_info.video_id} = ${series_analysis.video_id} ;;
+    sql_on: ${scrape_data.video_id} = ${series_analysis.video_id} ;;
     relationship: many_to_one
   }
   join: genre_total {
@@ -42,7 +42,7 @@ explore: series_analysis {
   }
   join: series_ndt {
     type: left_outer
-    sql_on: ${video_info.video_name} = ${series_ndt.video_name} ;;
+    sql_on: ${scrape_data.video_name} = ${series_ndt.video_name} ;;
     relationship: one_to_one
   }
 }
@@ -77,11 +77,6 @@ explore: channel_basic_a2_daily_first {
     sql_on: ${scrape_data.video_id} = ${channel_basic_a2_daily_first.video_id} ;;
     relationship: many_to_one
   }
-  join: video_info {
-    type: left_outer
-    sql_on: ${video_info.video_id} = ${channel_basic_a2_daily_first.video_id} ;;
-    relationship: many_to_one
-  }
   join: video_days {
     type: left_outer
     sql_on: ${channel_basic_a2_daily_first.video_id} = ${video_days.video_id} ;;
@@ -89,8 +84,8 @@ explore: channel_basic_a2_daily_first {
   }
   join: demographics_dt {
     type: left_outer
-    sql_on: ${video_info.video_id} = ${demographics_dt.video_id}  ;;
-    relationship: one_to_many
+    sql_on: ${channel_basic_a2_daily_first.video_id} = ${demographics_dt.video_id}  ;;
+    relationship: many_to_many
   }
   join: genre_total {
     type: left_outer
@@ -108,16 +103,16 @@ explore: channel_basic_a2_daily_first {
   join: traffic {
     from: traffic_source
     type: left_outer
-    sql_on: ${traffic.video_id} = ${video_info.video_id} ;;
+    sql_on: ${traffic.video_id} = ${scrape_data.video_id} ;;
     relationship: one_to_many
     }
 }
 
 
 explore: demographics_dt {
-  join:  video_info {
+  join:  scrape_data {
     type: left_outer
-    sql_on: ${demographics_dt.video_id} = ${video_info.video_id} ;;
+    sql_on: ${demographics_dt.video_id} = ${scrape_data.video_id} ;;
     relationship: many_to_one
   }
   join: genre_total {
@@ -133,9 +128,9 @@ explore: genre_total {
 }
 
 explore: traffic_source {
-  join: video_info {
+  join: scrape_data {
     type: left_outer
-    sql_on: ${traffic_source.video_id} = ${video_info.video_id} ;;
+    sql_on: ${traffic_source.video_id} = ${scrape_data.video_id} ;;
     relationship: many_to_one
   }
 }
@@ -147,26 +142,9 @@ explore: sharing {
     and ${channel_basic_a2_daily_first._data_date} = ${sharing._data_date};;
     relationship: many_to_many
   }
-  join: video_info {
+  join: scrape_data {
     type: left_outer
-    sql_on: ${sharing.video_id} = ${video_info.video_id} ;;
+    sql_on: ${sharing.video_id} = ${scrape_data.video_id} ;;
     relationship: many_to_one
   }
-}
-
-explore: playback {
-  hidden: yes
-  join: parameter{
-    sql:  ;;
-  relationship: one_to_one
-  }
-
-}
-
-explore: LAG_TEST {
-hidden: yes
-}
-
-explore: multi_date_test {
-  hidden: yes
 }

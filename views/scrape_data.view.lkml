@@ -3,7 +3,7 @@ view: scrape_data {
   sql_trigger_value: 1;;
   sql:
   SELECT *
-  FROM `thesis-project-252601.YoutubeData.scrape_data`
+  FROM scrape_data
     ;;
 }
   dimension: comment_count {
@@ -64,13 +64,20 @@ view: scrape_data {
     sql: TRIM(SUBSTR(replace(${remove_pieter},"【】",""),0,STRPOS(replace(${remove_pieter},"【】",""),"話"))) ;;
   }
 
+  dimension: playlist_name {
+    sql:
+    CASE
+    WHEN strpos(${video_name},"【") > 0 THEN substr(${video_name},strpos(${video_name},"【")+1,((strpos(${video_name},"】")-1)-(strpos(${video_name},"【"))))
+    ELSE "no_playlist" END ;;
+  }
+
   dimension: cleaned_name {
     type: string
     sql: ${remove_bracket}
       ;;
     link: {
       label: "Video URL"
-      url: "https://www.youtube.com/watch?v={{ video_info.video_id._value | url_encode}}"
+      url: "https://www.youtube.com/watch?v={{ scrape_data.video_id._value | url_encode}}"
     }
     link: {
       label: "Video Dashboard"

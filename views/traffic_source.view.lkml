@@ -47,7 +47,7 @@ view: traffic_source {
   dimension: traffic_source_detail {
     type: string
     sql: ${TABLE}.traffic_source_detail ;;
-    drill_fields: [video_info.title,channel_basic_a2_daily_first.video_stats*]
+    drill_fields: [scrape_data.title,channel_basic_a2_daily_first.video_stats*]
   }
 
   measure: views {

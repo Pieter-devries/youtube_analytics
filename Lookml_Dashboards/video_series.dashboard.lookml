@@ -8,8 +8,8 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: single_value
-    fields: [video_info.title]
-    sorts: [video_info.title]
+    fields: [scrape_data.playlist_name]
+    sorts: [scrape_data.playlist_name]
     limit: 500
 
     custom_color_enabled: true
@@ -23,8 +23,8 @@
     conditional_formatting_include_nulls: false
     series_types: {}
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 0
     col: 0
     width: 3
@@ -34,7 +34,7 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: looker_grid
-    fields: [video_info.video_name, channel_basic_a2_daily_first.subscriber_change,
+    fields: [scrape_data.video_name, channel_basic_a2_daily_first.subscriber_change,
       channel_basic_a2_daily_first.views, channel_basic_a2_daily_first.avg_watch_time,
       channel_basic_a2_daily_first.comments, channel_basic_a2_daily_first.likes, channel_basic_a2_daily_first.dislikes,
       channel_basic_a2_daily_first.shares, video_days.post_date_date]
@@ -44,7 +44,7 @@
     limit: 20
     column_limit: 50
 
-    column_order: ["$$$_row_numbers_$$$", video_info.video_name, channel_basic_a2_daily_first.subscripter_change,
+    column_order: ["$$$_row_numbers_$$$", scrape_data.video_name, channel_basic_a2_daily_first.subscripter_change,
       channel_basic_a2_daily_first.views, channel_basic_a2_daily_first.avg_watch_time,
       channel_basic_a2_daily_first.watch_time_minutes, channel_basic_a2_daily_first.comments,
       channel_basic_a2_daily_first.likes, channel_basic_a2_daily_first.dislikes, channel_basic_a2_daily_first.shares]
@@ -56,7 +56,7 @@
     hide_row_totals: false
     size_to_fit: true
     series_column_widths:
-      video_info.video_name: 328
+      scrape_data.video_name: 328
     series_cell_visualizations:
       channel_basic_a2_daily_first.subscripter_change:
         is_active: true
@@ -112,8 +112,8 @@
     hidden_fields: []
     y_axes: []
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 8
     col: 8
     width: 16
@@ -164,8 +164,8 @@
     show_silhouette: false
     totals_color: "#808080"
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 2
     col: 8
     width: 8
@@ -224,8 +224,8 @@
     show_silhouette: false
     totals_color: "#808080"
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 2
     col: 16
     width: 8
@@ -235,13 +235,13 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: single_value
-    fields: [channel_basic_a2_daily_first.views, video_info.view_num]
+    fields: [channel_basic_a2_daily_first.views, scrape_data.view_count]
     limit: 500
     series_types: {}
     hidden_fields:
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 0
     col: 8
     width: 4
@@ -260,8 +260,8 @@
     series_types: {}
     hidden_fields: [channel_basic_a2_daily_first.watch_time_minutes]
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 0
     col: 12
     width: 4
@@ -276,8 +276,8 @@
     column_limit: 50
     series_types: {}
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 0
     col: 16
     width: 4
@@ -292,19 +292,12 @@
     column_limit: 50
     series_types: {}
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 0
     col: 20
     width: 4
     height: 2
-  - title: Genre 1
-    name: Genre 1
-    model: thesis_cool
-    explore: channel_basic_a2_daily_first
-    type: single_value
-    fields: [video_info.genre1]
-    limit: 500
 
     custom_color_enabled: true
     show_single_value_title: false
@@ -317,63 +310,11 @@
     conditional_formatting_include_nulls: false
     series_types: {}
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 0
     col: 3
     width: 2
-    height: 2
-  - title: Genre ２
-    name: Genre ２
-    model: thesis_cool
-    explore: channel_basic_a2_daily_first
-    type: single_value
-    fields: [video_info.genre2]
-    sorts: [video_info.genre2]
-    limit: 500
-
-    custom_color_enabled: true
-    show_single_value_title: false
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
-    row: 0
-    col: 5
-    width: 3
-    height: 2
-  - title: Genre ３
-    name: Genre ３
-    model: thesis_cool
-    explore: channel_basic_a2_daily_first
-    type: single_value
-    fields: [video_info.genre3]
-    sorts: [video_info.genre3]
-    limit: 500
-
-    custom_color_enabled: true
-    show_single_value_title: false
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
-    row: 2
-    col: 3
-    width: 3
     height: 2
   - title: Demographics
     name: Demographics
@@ -423,8 +364,8 @@
     show_silhouette: false
     totals_color: "#808080"
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 8
     col: 0
     width: 8
@@ -434,12 +375,12 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: looker_line
-    fields: [video_days.days_after_post, channel_basic_a2_daily_first.views, video_info.video_name]
-    pivots: [video_info.video_name]
+    fields: [video_days.days_after_post, channel_basic_a2_daily_first.views, scrape_data.video_name]
+    pivots: [scrape_data.video_name]
     filters:
       video_days.days_after_post: NOT NULL
       channel_basic_a2_daily_first.views: NOT NULL
-    sorts: [video_info.video_name 0, video_days.days_after_post]
+    sorts: [scrape_data.video_name 0, video_days.days_after_post]
     limit: 500
     dynamic_fields: [{table_calculation: delta, label: Delta, expression: "if(\n \
           \ is_null(${channel_basic_a2_daily_first.views}),\n  null,${runboys}-${meanboys}\n\
@@ -502,20 +443,12 @@
     interpolation: monotone
     hidden_fields: [channel_basic_a2_daily_first.views, runboys, meanboys]
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 14
     col: 0
     width: 8
     height: 6
-  - title: Genre 4
-    name: Genre 4
-    model: thesis_cool
-    explore: channel_basic_a2_daily_first
-    type: single_value
-    fields: [video_info.genre4]
-    sorts: [video_info.genre4]
-    limit: 500
 
     custom_color_enabled: true
     show_single_value_title: false
@@ -528,58 +461,30 @@
     conditional_formatting_include_nulls: false
     series_types: {}
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 2
     col: 6
     width: 2
     height: 2
-  - title: Title_card (copy)
-    name: Title_card (copy)
-    model: thesis_cool
-    explore: channel_basic_a2_daily_first
-    type: single_value
-    fields: [video_info.title_pic]
-    filters:
-      video_info.title_pic: "-NULL"
-    sorts: [video_info.title_pic]
-    limit: 500
-
-    custom_color_enabled: true
-    show_single_value_title: false
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
-    row: 4
-    col: 0
-    width: 8
-    height: 4
   - title: Metric Fun
     name: Metric Fun
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: looker_line
     fields: [channel_basic_a2_daily_first.metric_chooser, channel_basic_a2_daily_first._data_date,
-      video_info.video_name]
-    pivots: [video_info.video_name]
+      scrape_data.video_name]
+    pivots: [scrape_data.video_name]
     filters:
-      video_info.video_name: ''
+      scrape_data.video_name: ''
       channel_basic_a2_daily_first.metric_chooser: NOT NULL
-    sorts: [channel_basic_a2_daily_first._data_date desc, video_info.video_name]
+    sorts: [channel_basic_a2_daily_first._data_date desc, scrape_data.video_name]
     limit: 500
 
     listen:
-      Title: video_info.title
+      Title: scrape_data.playlist_name
       Parameter: channel_basic_a2_daily_first.dynamic_measure
-      Anime Series: video_info.anime_series_name
+      Anime Series: scrape_data.playlist_name
     row: 14
     col: 8
     width: 16
@@ -597,8 +502,8 @@
 
     series_types: {}
     listen:
-      Title: video_info.title
-      Anime Series: video_info.anime_series_name
+      Title: scrape_data.playlist_name
+      Anime Series: scrape_data.playlist_name
     row: 20
     col: 0
     width: 8
@@ -613,7 +518,7 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     listens_to_filters: []
-    field: video_info.title
+    field: scrape_data.playlist_name
   - name: Parameter
     title: Parameter
     type: field_filter
@@ -633,4 +538,4 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     listens_to_filters: []
-    field: video_info.anime_series_name
+    field: scrape_data.playlist_name

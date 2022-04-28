@@ -129,7 +129,7 @@ view: channel_basic_a2_daily_first {
 
 
   set: detail {
-    fields: [video_info.title,genre_total.genre,views,comments]
+    fields: [scrape_data.playlist_name,genre_total.genre,views,comments]
     }
 # ------------
 #  DIMENSIONS
@@ -297,7 +297,7 @@ view: channel_basic_a2_daily_first {
     group_label: "Subscription"
     type: sum
     sql: ${TABLE}.subscribers_gained ;;
-    drill_fields: [video_info.video_name,vid_stats*]
+    drill_fields: [scrape_data.video_name,vid_stats*]
   }
 
 
@@ -305,14 +305,14 @@ view: channel_basic_a2_daily_first {
     group_label: "Subscription"
     type: sum
     sql: ${TABLE}.subscribers_lost ;;
-    drill_fields: [video_info.video_name,vid_stats*]
+    drill_fields: [scrape_data.video_name,vid_stats*]
   }
 
   measure: subscriber_change {
     group_label: "Subscription"
     type: number
     sql: ${subscribers_gained}-${subscribers_lost} ;;
-    drill_fields: [video_info.video_name,vid_stats*]
+    drill_fields: [scrape_data.video_name,vid_stats*]
   }
 
 #I chose to calculate based on subscribers gained, to know speed of new subscriber acquisition
@@ -454,7 +454,7 @@ view: channel_basic_a2_daily_first {
   }
 
   set: vid_stats {
-    fields: [video_info.title,views,subscriber_change,like_change,watch_time_minutes,comments,shares]
+    fields: [scrape_data.playlist_name,views,subscriber_change,like_change,watch_time_minutes,comments,shares]
   }
 
 

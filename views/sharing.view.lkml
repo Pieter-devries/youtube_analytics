@@ -55,7 +55,7 @@ view: sharing {
   dimension: sharingservice {
     type: string
     sql: ${TABLE}.sharingservice ;;
-    drill_fields: [video_info.title,video_info.video_name,Basic.vid_stats*]
+    drill_fields: [scrape_data.title,scrape_data.video_name,Basic.vid_stats*]
   }
 
   dimension: subscribed_status {
@@ -70,6 +70,6 @@ view: sharing {
 
   measure: count {
     type: count
-    drill_fields: [video_info.title,video_info.video_name,Basic.vid_stats*]
+    drill_fields: [scrape_data.title,scrape_data.video_name,Basic.vid_stats*]
   }
 }

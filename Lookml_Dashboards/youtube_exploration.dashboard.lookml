@@ -15,7 +15,7 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: looker_grid
-    fields: [video_info.video_name, video_info.published_date_date, channel_basic_a2_daily_first.views,
+    fields: [scrape_data.video_name, channel_basic_a2_daily_first.views,
       channel_basic_a2_daily_first.avg_watch_time, channel_basic_a2_daily_first.subscriber_change,
       channel_basic_a2_daily_first.comments, channel_basic_a2_daily_first.likes, channel_basic_a2_daily_first.dislikes,
       channel_basic_a2_daily_first.shares, channel_basic_a2_daily_first.key_points]
@@ -39,13 +39,13 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    column_order: ["$$$_row_numbers_$$$", video_info.video_name, video_info.published_date_date,
+    column_order: ["$$$_row_numbers_$$$", scrape_data.video_name,
       channel_basic_a2_daily_first.views, channel_basic_a2_daily_first.avg_watch_time,
       channel_basic_a2_daily_first.subscriber_change, channel_basic_a2_daily_first.comments,
       channel_basic_a2_daily_first.likes, channel_basic_a2_daily_first.dislikes, channel_basic_a2_daily_first.shares,
       channel_basic_a2_daily_first.key_points]
     series_column_widths:
-      video_info.video_name: 328
+      scrape_data.video_name: 328
     series_cell_visualizations:
       channel_basic_a2_daily_first.subscripter_change:
         is_active: true
@@ -92,11 +92,11 @@
     series_types: {}
     hidden_fields:
     pinned_columns:
-      video_info.video_name: left
+      scrape_data.video_name: left
     defaults_version: 1
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 7
     col: 15
     width: 9
@@ -106,10 +106,8 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: looker_column
-    fields: [video_info.thumbnail, channel_basic_a2_daily_first.subscribers_gained,
+    fields: [ channel_basic_a2_daily_first.subscribers_gained,
       channel_basic_a2_daily_first.subscribers_lost]
-    filters:
-      video_info.thumbnail: "-NULL"
     sorts: [channel_basic_a2_daily_first.subscribers_gained desc 0, channel_basic_a2_daily_first.subscribers_lost]
     limit: 10
 
@@ -151,7 +149,7 @@
     hidden_fields: []
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 13
     col: 5
     width: 10
@@ -161,10 +159,9 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: looker_column
-    fields: [video_info.thumbnail, channel_basic_a2_daily_first.subscribers_gained,
+    fields: [ channel_basic_a2_daily_first.subscribers_gained,
       channel_basic_a2_daily_first.subscribers_lost]
     filters:
-      video_info.thumbnail: "-NULL"
       channel_basic_a2_daily_first.subscribers_lost: ">0"
     sorts: [channel_basic_a2_daily_first.subscribers_lost desc]
     limit: 10
@@ -206,7 +203,7 @@
     totals_color: "#808080"
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 13
     col: 15
     width: 9
@@ -281,7 +278,7 @@
     totals_color: "#808080"
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 2
     col: 5
     width: 10
@@ -358,7 +355,7 @@
     totals_color: "#808080"
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 2
     col: 15
     width: 9
@@ -379,7 +376,7 @@
     series_types: {}
     listen:
       Date Filter: demographics_dt._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 18
     col: 15
     width: 9
@@ -402,7 +399,7 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: looker_grid
-    fields: [video_info.title, channel_basic_a2_daily_first.count_videos, channel_basic_a2_daily_first.views,
+    fields: [scrape_data.playlist_name, channel_basic_a2_daily_first.count_videos, channel_basic_a2_daily_first.views,
       channel_basic_a2_daily_first.subscriber_change, channel_basic_a2_daily_first.like_change,
       channel_basic_a2_daily_first.avg_watch_time, channel_basic_a2_daily_first.comments,
       channel_basic_a2_daily_first.shares, channel_basic_a2_daily_first.key_points]
@@ -424,14 +421,14 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    column_order: ["$$$_row_numbers_$$$", video_info.title, channel_basic_a2_daily_first.count_videos,
+    column_order: ["$$$_row_numbers_$$$", scrape_data.playlist_name, channel_basic_a2_daily_first.count_videos,
       channel_basic_a2_daily_first.views, channel_basic_a2_daily_first.subscriber_change,
       channel_basic_a2_daily_first.avg_watch_time, channel_basic_a2_daily_first.comments,
       channel_basic_a2_daily_first.likes, channel_basic_a2_daily_first.dislikes, channel_basic_a2_daily_first.shares,
       channel_basic_a2_daily_first.key_points]
     series_column_widths:
-      video_info.video_name: 328
-      video_info.title: 230
+      scrape_data.video_name: 328
+      scrape_data.playlist_name: 230
     series_cell_visualizations:
       channel_basic_a2_daily_first.subscripter_change:
         is_active: true
@@ -477,11 +474,11 @@
         strikethrough: false, fields: !!null ''}]
     series_types: {}
     pinned_columns:
-      video_info.title: left
+      scrape_data.playlist_name: left
     defaults_version: 1
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 7
     col: 5
     width: 10
@@ -505,7 +502,7 @@
     series_types: {}
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 0
     col: 5
     width: 5
@@ -529,62 +526,11 @@
     series_types: {}
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 0
     col: 15
     width: 9
     height: 2
-  - title: Untitled
-    name: Untitled
-    model: thesis_cool
-    explore: channel_basic_a2_daily_first
-    type: single_value
-    fields: [video_info.play_button]
-    filters:
-      video_info.play_button: "-NULL"
-    sorts: [video_info.play_button]
-    limit: 500
-    custom_color_enabled: true
-    show_single_value_title: false
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen:
-      Series Title: video_info.title
-    row: 2
-    col: 0
-    width: 3
-    height: 2
-  - title: Untitled (copy)
-    name: Untitled (copy)
-    model: thesis_cool
-    explore: channel_basic_a2_daily_first
-    type: single_value
-    fields: [video_info.face]
-    filters:
-      video_info.play_button: "-NULL"
-    limit: 500
-    custom_color_enabled: true
-    show_single_value_title: false
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen:
-      Series Title: video_info.title
-    row: 0
-    col: 3
-    width: 2
-    height: 4
   - title: Latest Data
     name: Latest Data
     model: thesis_cool
@@ -592,8 +538,6 @@
     type: single_value
     fields: [channel_basic_a2_daily_first._data_date]
     fill_fields: [channel_basic_a2_daily_first._data_date]
-    filters:
-      video_info.play_button: "-NULL"
     limit: 500
     custom_color_enabled: true
     show_single_value_title: true
@@ -608,7 +552,7 @@
     hidden_fields: []
     y_axes: []
     listen:
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 0
     col: 0
     width: 3
@@ -655,7 +599,7 @@
     totals_color: "#808080"
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 30
     col: 15
     width: 9
@@ -672,7 +616,7 @@
     series_types: {}
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 30
     col: 5
     width: 10
@@ -699,7 +643,7 @@
     note_text: ''
     listen:
       Date Filter: channel_basic_a2_daily_first._data_date
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 0
     col: 10
     width: 5
@@ -777,7 +721,7 @@
     note_text: ''
     title_hidden: true
     listen:
-      Series Title: video_info.title
+      Series Title: scrape_data.playlist_name
     row: 18
     col: 5
     width: 10
@@ -868,7 +812,7 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     listens_to_filters: [Series Title]
-    field: video_info.video_name
+    field: scrape_data.video_name
   - name: Series Title
     title: Series Title
     type: field_filter
@@ -881,4 +825,4 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     listens_to_filters: []
-    field: video_info.title
+    field: scrape_data.playlist_name

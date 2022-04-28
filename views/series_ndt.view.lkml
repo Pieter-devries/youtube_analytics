@@ -3,13 +3,13 @@ view: series_ndt {
     explore_source: series_analysis {
       column: views {}
       column: watch_time_hours {}
-      column: video_name { field: video_info.video_name }
+      column: video_name { field: scrape_data.video_name }
 #       filters: {
-#         field: video_info.title
+#         field: scrape_data.title
 #         value: "鬼滅の刃"
 #       }
 #       bind_filters: {
-#         from_field: video_info.title
+#         from_field: scrape_data.title
 #         to_field: series_ndt.title
 #       }
         bind_all_filters: yes
