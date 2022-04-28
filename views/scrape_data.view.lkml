@@ -46,20 +46,31 @@ view: scrape_data {
     sql: ${TABLE}.view_count ;;
   }
 
+  dimension: episode_number {
+    view_label: "Basic"
+    group_label: "Video Info"
+    type: number
+    sql:
+    CASE
+      WHEN SUBSTR(${video_name},STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"([0-9]話)")),0) IS NOT NULL
+        THEN TRIM(REGEXP_REPLACE(SUBSTR(${video_name},STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"( [0-9])")),4),r"\D+",""))
+      ELSE null
+    END;;
+  }
 
   dimension: playlist_name {
     view_label: "Basic"
     group_label: "Video Info"
     sql:
     CASE
-      WHEN strpos(${video_name},"【") > 0
+      WHEN STRPOS(${video_name},"【") > 0
         THEN
           CASE
-            WHEN strpos(${video_name},regexp_extract(${video_name},r"([0-9])")) < 11 OR strpos(${video_name},regexp_extract(${video_name},r"([0-9])")) IS NULL
-              THEN substr(${video_name},strpos(${video_name},"【")+1,((strpos(${video_name},"】")-1)-(strpos(${video_name},"【"))))
-            WHEN substr(${video_name},strpos(${video_name},"【")+1,((strpos(${video_name},"】")-1)-(strpos(${video_name},"【")))) = "海外の反応 アニメ"
-              THEN TRIM(substr(${video_name},strpos(${video_name},"】")+1,strpos(${video_name},regexp_extract(${video_name},r"([0-9])"))-CHAR_LENGTH("【海外の反応 アニメ】 ")))
-              ELSE substr(${video_name},strpos(${video_name},"【")+1,((strpos(${video_name},"】")-1)-(strpos(${video_name},"【"))))
+            WHEN STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"([0-9])")) < 11 OR STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"([0-9])")) IS NULL
+              THEN SUBSTR(${video_name},STRPOS(${video_name},"【")+1,((STRPOS(${video_name},"】")-1)-(STRPOS(${video_name},"【"))))
+            WHEN SUBSTR(${video_name},STRPOS(${video_name},"【")+1,((STRPOS(${video_name},"】")-1)-(STRPOS(${video_name},"【")))) = "海外の反応 アニメ"
+              THEN TRIM(SUBSTR(${video_name},STRPOS(${video_name},"】")+1,STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"([0-9])"))-CHAR_LENGTH("【海外の反応 アニメ】 ")))
+              ELSE SUBSTR(${video_name},STRPOS(${video_name},"【")+1,((STRPOS(${video_name},"】")-1)-(STRPOS(${video_name},"【"))))
           END
       ELSE "no_playlist"
     END
