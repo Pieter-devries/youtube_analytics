@@ -73,6 +73,7 @@ explore: channel_basic_a2_daily_first {
       materialization: {datagroup_trigger:youtube_transfer}
       }
   join: scrape_data {
+    fields: [scrape_data.video_name,scrape_data.playlist_name]
     type: left_outer
     sql_on: ${scrape_data.video_id} = ${channel_basic_a2_daily_first.video_id} ;;
     relationship: many_to_one

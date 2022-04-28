@@ -35,6 +35,8 @@ view: scrape_data {
   }
 
   dimension: video_name {
+    view_label: "Basic"
+    group_label: "Video Info"
     type: string
     sql: ${TABLE}.video_name ;;
   }
@@ -44,12 +46,10 @@ view: scrape_data {
     sql: ${TABLE}.view_count ;;
   }
 
-  measure: count {
-    type: count
-    drill_fields: [video_name]
-  }
 
   dimension: playlist_name {
+    view_label: "Basic"
+    group_label: "Video Info"
     sql:
     CASE
       WHEN strpos(${video_name},"【") > 0

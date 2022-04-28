@@ -228,7 +228,7 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: single_value
-    fields: [channel_basic_a2_daily_first.views, scrape_data.view_count]
+    fields: [channel_basic_a2_daily_first.views]
     limit: 500
     series_types: {}
     hidden_fields:

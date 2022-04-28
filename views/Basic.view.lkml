@@ -17,7 +17,7 @@ view: channel_basic_a2_daily_first {
   ;;
   }
 
-  drill_fields: [_data_date,country_code,views]
+  drill_fields: [scrape_data.video_name,views]
 
   dimension: prim_key {
     hidden: yes
@@ -49,6 +49,18 @@ view: channel_basic_a2_daily_first {
           ;;
   }
 
+  dimension: comments {
+    hidden: yes
+    sql: ${TABLE}.comments ;;
+  }
+
+  dimension: like_dim {
+    hidden: yes
+    group_label: "Likes"
+    sql: ${TABLE}.likes ;;
+    type: number
+  }
+
 
 # ------------
 #  Dates
@@ -78,23 +90,6 @@ view: channel_basic_a2_daily_first {
     sql: ${TABLE}._PARTITIONTIME ;;
   }
  　
-  dimension: weeknum2 {
-    type: date
-    sql: date(extract(year from ${TABLE}._DATA_DATE),extract(month from ${TABLE}._DATA_DATE),1) ;;
-}
- #(月初のweek_of_year) - (その日のweek_of_year) + 1
-  dimension: weeknum {
-    type: number
-    sql: CASE
-          WHEN ${_data_week_of_year} > 25 THEN ${_data_week_of_year} - 25
-          WHEN ${_data_week_of_year} > 20 THEN ${_data_week_of_year} - 20
-          WHEN ${_data_week_of_year} > 15 THEN ${_data_week_of_year} - 15
-          WHEN ${_data_week_of_year} > 9 THEN ${_data_week_of_year} - 9
-          WHEN ${_data_week_of_year} > 5 THEN ${_data_week_of_year} - 5
-          ELSE ${_data_week_of_year}
-         END;;
-  }
-
   measure: the_latest_date {
     type: date
     sql: max(CAST(${_data_date} as timestamp)) ;;
@@ -103,11 +98,6 @@ view: channel_basic_a2_daily_first {
   measure: the_earliest_date {
     type: date
     sql: min(CAST(${_data_date} as timestamp)) ;;
-  }
-
-  measure:  diff_days{
-    type: number
-    sql: date_diff(${the_latest_date},${the_earliest_date},day) ;;
   }
 
   dimension_group: _latest {
@@ -136,6 +126,7 @@ view: channel_basic_a2_daily_first {
 # ------------
 
   dimension: video_id {
+    group_label: "Video Info"
     type: string
     sql: ${TABLE}.video_id ;;
   }
@@ -147,29 +138,22 @@ view: channel_basic_a2_daily_first {
   }
 
   dimension: country_code {
+    group_label: "Demographics"
     description: "double digits"
     type: string
     sql: ${TABLE}.country_code ;;
   }
 
-  dimension: html_test {
-    hidden:  yes
-    sql: ${country_code} ;;
-    html: {"country": "{{value}}","video_id": "{{video_id._value}}"} ;;
-  }
-
   dimension: live_or_on_demand {
+    group_label: "Video Info"
     type: string
     sql: ${TABLE}.live_or_on_demand ;;
   }
 
   dimension: subscribed_status {
+    group_label: "Demographics"
     type: string
     sql: ${TABLE}.subscribed_status ;;
-  }
-
-  measure: latest_date {
-    sql: MAX(${_data_raw});;
   }
 
   measure: card_clicks {
@@ -196,20 +180,18 @@ view: channel_basic_a2_daily_first {
     sql: ${TABLE}.card_teaser_impressions ;;
   }
 
- dimension: comm {
-   sql: ${TABLE}.comments ;;
- }
 
-  measure: comments {
+
+  measure: total_comments {
     group_label: "Comments"
     type: sum
-    sql: ${comm} ;;
+    sql: ${comments} ;;
   }
 
   measure: view_per_comments {
     group_label: "Views"
     type: number
-    sql: ${views}/nullif(${comments},0) ;;
+    sql: ${views}/nullif(${total_comments},0) ;;
     value_format: "#.00"
   }
 
@@ -219,19 +201,6 @@ view: channel_basic_a2_daily_first {
     sql: ${TABLE}.dislikes ;;
   }
 
-  dimension: like_dim {
-    group_label: "Likes"
-    sql: ${TABLE}.likes ;;
-    type: number
-    html:
-    {% assign param = target_id._parameter_value %}
-    {% if param == value %}
-     {{'*'| append: value }}
-    {% else %}
-    {{ value }}
-    {% endif %}
-    ;;
-  }
 
   measure: likes {
     group_label: "Likes"
@@ -343,6 +312,7 @@ view: channel_basic_a2_daily_first {
 
   measure: views {
     group_label: "Views"
+    label: "Total Views"
     type: sum
     sql: ${view_num} ;;
     # link: {
@@ -414,15 +384,7 @@ view: channel_basic_a2_daily_first {
     group_label: "Video"
     type: number
     sql: ${views}/${count_videos} ;;
-    value_format: "#.00"
-    html: {% if genre_total.genre._value == 'Action' %}
-      <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
-    {% elsif genre_total.genre._value == 'Adventure' %}
-      <p style="color: black; background-color: lightgreen; font-size:100%; text-align:center">{{ rendered_value }}</p>
-    {% else %}
-      <p style="color: black; background-color: orange; font-size:100%; text-align:center">{{ rendered_value }}</p>
-    {% endif %}
-;;
+    value_format: "#,##0"
   }
 
   measure: count {
@@ -620,9 +582,6 @@ measure: combo_metric {
     #https://localhost:9999/explore/thesis_cool/channel_basic_a2_daily_first?fields=channel_basic_a2_daily_first.yesno_measure&f[channel_basic_a2_daily_first.yesno_param]=Yes&vis=%7B%7D&filter_config=%7B%22channel_basic_a2_daily_first.yesno_param%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%7D&origin=share-expanded
 
 ### param stuff
-    dimension: comment_num {
-      sql: ${TABLE}.comments ;;
-    }
     parameter: bucket_1 { view_label: "Bucket" type: number}
     parameter: bucket_2 { view_label: "Bucket" type: number}
     parameter: bucket_3 { view_label: "Bucket" type: number}
@@ -640,7 +599,7 @@ measure: combo_metric {
           CASE
           {% for i in (1..bucket_array_length) %}
           {% assign j = i | minus: 1 %}
-            WHEN ${comment_num} < {{ bucket_array[i] }} THEN '{{i}}: {{ bucket_array[j] }} < N < {{ bucket_array[i] }}'
+            WHEN ${comments} < {{ bucket_array[i] }} THEN '{{i}}: {{ bucket_array[j] }} < N < {{ bucket_array[i] }}'
           {% endfor %}
           ELSE
             '5: Unknown'
