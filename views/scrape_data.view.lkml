@@ -49,41 +49,21 @@ view: scrape_data {
     drill_fields: [video_name]
   }
 
-  dimension: remove_kaigai {
-    hidden: yes
-    sql: TRIM(SUBSTR(replace(${video_name},"【海外の反応 アニメ】",""),0,STRPOS(replace(${video_name},"【海外の反応 アニメ】",""),"話"))) ;;
-  }
-
-  dimension: remove_pieter {
-    hidden: yes
-    sql: TRIM(SUBSTR(replace(${remove_kaigai},"ピーターの反応",""),0,STRPOS(replace(${remove_kaigai},"ピーターの反応",""),"話"))) ;;
-  }
-
-  dimension: remove_bracket {
-    hidden: yes
-    sql: TRIM(SUBSTR(replace(${remove_pieter},"【】",""),0,STRPOS(replace(${remove_pieter},"【】",""),"話"))) ;;
-  }
-
   dimension: playlist_name {
     sql:
     CASE
-    WHEN strpos(${video_name},"【") > 0 THEN substr(${video_name},strpos(${video_name},"【")+1,((strpos(${video_name},"】")-1)-(strpos(${video_name},"【"))))
-    ELSE "no_playlist" END ;;
-  }
-
-  dimension: cleaned_name {
-    type: string
-    sql: ${remove_bracket}
-      ;;
-    link: {
-      label: "Video URL"
-      url: "https://www.youtube.com/watch?v={{ scrape_data.video_id._value | url_encode}}"
-    }
-    link: {
-      label: "Video Dashboard"
-      url: "/dashboards/6?Video_Name={{filterable_value | url_encode}}"
-      icon_url: "https://image.flaticon.com/icons/png/512/87/87578.png"
-    }
+      WHEN strpos(${video_name},"【") > 0
+        THEN
+          CASE
+            WHEN strpos(${video_name},regexp_extract(${video_name},r"([0-9])")) < 11 OR strpos(${video_name},regexp_extract(${video_name},r"([0-9])")) IS NULL
+              THEN substr(${video_name},strpos(${video_name},"【")+1,((strpos(${video_name},"】")-1)-(strpos(${video_name},"【"))))
+            WHEN substr(${video_name},strpos(${video_name},"【")+1,((strpos(${video_name},"】")-1)-(strpos(${video_name},"【")))) = "海外の反応 アニメ"
+              THEN TRIM(substr(${video_name},strpos(${video_name},"】")+1,strpos(${video_name},regexp_extract(${video_name},r"([0-9])"))-CHAR_LENGTH("【海外の反応 アニメ】 ")))
+              ELSE substr(${video_name},strpos(${video_name},"【")+1,((strpos(${video_name},"】")-1)-(strpos(${video_name},"【"))))
+          END
+      ELSE "no_playlist"
+    END
+        ;;
   }
 
 }

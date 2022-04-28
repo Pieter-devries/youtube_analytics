@@ -195,7 +195,7 @@
     model: thesis_cool
     explore: channel_basic_a2_daily_first
     type: single_value
-    fields: [scrape_data.cleaned_name]
+    fields: [scrape_data.playlist_name]
     filters:
       channel_basic_a2_daily_first.video_id: "-NULL"
     limit: 1
