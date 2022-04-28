@@ -8,11 +8,11 @@ view: channel_basic_a2_daily_first {
     datagroup_trigger: youtube_transfer
     sql:
           SELECT
-          row_number() OVER(ORDER BY _DATA_DATE) AS prim_key,
+          row_number() OVER(ORDER BY _PARTITIONTIME) AS prim_key,
           *,
 --          max(date) as max_date,
 --          min(date) as min_date
-          FROM channel_basic_a2_daily_first
+          FROM p_channel_basic_a2_daily_first
   --        GROUP BY 2
   ;;
   }
@@ -75,7 +75,7 @@ view: channel_basic_a2_daily_first {
     ]
     convert_tz: no
     datatype: date
-    sql: ${TABLE}._DATA_DATE ;;
+    sql: ${TABLE}._PARTITIONTIME ;;
   }
  　
   dimension: weeknum2 {
