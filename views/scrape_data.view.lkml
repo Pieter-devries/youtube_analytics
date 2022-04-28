@@ -6,26 +6,6 @@ view: scrape_data {
   FROM scrape_data
     ;;
 }
-  dimension: comment_count {
-    type: number
-    sql: ${TABLE}.comment_count ;;
-  }
-
-  dimension: like_count {
-    type: number
-    sql: ${TABLE}.like_count ;;
-  }
-
-  dimension: published_at {
-    type: date_time
-    datatype: datetime
-    sql: ${TABLE}.published_at ;;
-  }
-
-  dimension: url {
-    type: string
-    sql: ${TABLE}.url ;;
-  }
 
   dimension: video_id {
     primary_key: yes
@@ -39,11 +19,6 @@ view: scrape_data {
     group_label: "Video Info"
     type: string
     sql: ${TABLE}.video_name ;;
-  }
-
-  dimension: view_count {
-    type: number
-    sql: ${TABLE}.view_count ;;
   }
 
   dimension: episode_number {
