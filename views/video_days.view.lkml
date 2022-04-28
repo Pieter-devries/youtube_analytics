@@ -2,19 +2,19 @@ view: video_days {
   derived_table: {
     sql: SELECT
         DISTINCT video_id,
-        MIN(_DATA_DATE) AS Post_Date,
+        MIN(date) AS Post_Date,
         SUM(views) AS Views,
-        DATE_DIFF(MAX(_DATA_DATE),MIN(_DATA_DATE), day) Days_Posted,
-        SUM(views)/NULLIF(DATE_DIFF(MAX(_DATA_DATE),(MIN(_DATA_DATE)), day),
+        DATE_DIFF(MAX(date),MIN(date), day) Days_Posted,
+        SUM(views)/NULLIF(DATE_DIFF(MAX(date),(MIN(date)), day),
           0) AS views_per_day,
         CASE
-          WHEN DATE_DIFF(MAX(_DATA_DATE),MIN(_DATA_DATE), day) <= 14 THEN "First_14"
+          WHEN DATE_DIFF(MAX(date),MIN(date), day) <= 14 THEN "First_14"
         ELSE
         "After_14"
       END AS Posted
 
       FROM
-        `thesis-project-252601.YoutubeData.channel_basic_a2_daily_first`
+        p_channel_basic_a2_daily_first
       WHERE
         video_id IS NOT NULL
       GROUP BY

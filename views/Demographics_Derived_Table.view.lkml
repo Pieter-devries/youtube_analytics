@@ -3,10 +3,10 @@ view: demographics_dt {
   derived_table: {
       sql:
           SELECT
-          row_number() OVER(ORDER BY _DATA_DATE) AS prim_key,
+          row_number() OVER(ORDER BY _PARTITIONTIME) AS prim_key,
           *
-          FROM channel_demographics_a1_daily_first
-          WHERE {% condition date_filter %} CAST(_DATA_DATE as timestamp) {% endcondition %}　;;
+          FROM p_channel_demographics_a1_daily_first
+          WHERE {% condition date_filter %} CAST(_PARTITIONTIME as timestamp) {% endcondition %}　;;
     }
 
     dimension: prim_key {

@@ -12,7 +12,7 @@ view: video_based_cohort_analysis {
         watch_time_minutes,
         MIN(DATE) as posted_date
       FROM
-        channel_basic_a2_daily_first b
+        p_channel_basic_a2_daily_first b
       GROUP BY
         1,2,3,4
       HAVING

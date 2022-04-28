@@ -1,5 +1,5 @@
 view: playback {
-  sql_table_name: YoutubeData.playback ;;
+  sql_table_name: playback ;;
 
   dimension_group: _data {
     type: time
@@ -13,7 +13,7 @@ view: playback {
     ]
     convert_tz: no
     datatype: date
-    sql: ${TABLE}._DATA_DATE ;;
+    sql: ${TABLE}._PARTITIONTIME ;;
   }
 
   dimension: average_view_duration_seconds {

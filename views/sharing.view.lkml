@@ -1,5 +1,5 @@
 view: sharing {
-  sql_table_name: YoutubeData.sharing ;;
+  sql_table_name: sharing ;;
 
   dimension: primary_key {
     hidden: yes
@@ -33,7 +33,7 @@ view: sharing {
     ]
     convert_tz: no
     datatype: date
-    sql: ${TABLE}._DATA_DATE ;;
+    sql: ${TABLE}._PARTITIONTIME ;;
   }
 
   dimension: live_or_on_demand {

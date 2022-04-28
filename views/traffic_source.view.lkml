@@ -1,5 +1,5 @@
 view: traffic_source {
-  sql_table_name: YoutubeData.Traffic_Source ;;
+  sql_table_name: Traffic_Source ;;
 
   dimension_group: _data {
     type: time
@@ -14,7 +14,7 @@ view: traffic_source {
     ]
     convert_tz: no
     datatype: date
-    sql: ${TABLE}._DATA_DATE ;;
+    sql: ${TABLE}._PARTITIONTIME ;;
   }
 
   dimension: primary_key {
