@@ -1,5 +1,28 @@
 view: traffic_source {
-  sql_table_name: Traffic_Source ;;
+  derived_table: {
+    sql_trigger_value: select current_date() ;;
+    sql:
+      SELECT
+      *,
+      DATE (_PARTITIONTIME) AS _DATA_DATE,
+      CASE WHEN traffic_source_type = 0 THEN "Direct or Unknown"
+           WHEN traffic_source_type = 1 THEN "Youtube Advertising"
+           WHEN traffic_source_type = 3 THEN "Browse Features"
+           WHEN traffic_source_type = 4 THEN "Youtube Channels"
+           WHEN traffic_source_type = 5 THEN "Youtube Search"
+           WHEN traffic_source_type = 7 THEN "Suggested Videos"
+           WHEN traffic_source_type = 8 THEN "Other Youtube Features"
+           WHEN traffic_source_type = 9 THEN "External"
+           WHEN traffic_source_type = 11 THEN "Video Cards/Annotations"
+           WHEN traffic_source_type = 14 THEN "Playlists"
+           WHEN traffic_source_type = 17 THEN "Notifications"
+           WHEN traffic_source_type = 18 THEN "Playlist Page"
+           WHEN traffic_source_type = 20 THEN "END Screens"
+      END as traffic_source,
+      GENERATE_UUID() as primary_key
+    FROM
+      p_channel_traffic_source_a2_daily_first ;;
+}
 
   dimension_group: _data {
     type: time
@@ -71,72 +94,4 @@ view: traffic_source {
     sql: ${TABLE}.average_view_duration_percentage  ;;
     value_format: "0.xx\%"
   }
-
-  # # You can specify the table name if it's different from the view name:
-  # sql_table_name: my_schema_name.tester ;;
-  #
-  # # Define your dimensions and measures here, like this:
-  # dimension: user_id {
-  #   description: "Unique ID for each user that has ordered"
-  #   type: number
-  #   sql: ${TABLE}.user_id ;;
-  # }
-  #
-  # dimension: lifetime_orders {
-  #   description: "The total number of orders for each user"
-  #   type: number
-  #   sql: ${TABLE}.lifetime_orders ;;
-  # }
-  #
-  # dimension_group: most_recent_purchase {
-  #   description: "The date when each user last ordered"
-  #   type: time
-  #   timeframes: [date, week, month, year]
-  #   sql: ${TABLE}.most_recent_purchase_at ;;
-  # }
-  #
-  # measure: total_lifetime_orders {
-  #   description: "Use this for counting lifetime orders across many users"
-  #   type: sum
-  #   sql: ${lifetime_orders} ;;
-  # }
 }
-
-# view: traffic_source {
-#   # Or, you could make this view a derived table, like this:
-#   derived_table: {
-#     sql: SELECT
-#         user_id as user_id
-#         , COUNT(*) as lifetime_orders
-#         , MAX(orders.created_at) as most_recent_purchase_at
-#       FROM orders
-#       GROUP BY user_id
-#       ;;
-#   }
-#
-#   # Define your dimensions and measures here, like this:
-#   dimension: user_id {
-#     description: "Unique ID for each user that has ordered"
-#     type: number
-#     sql: ${TABLE}.user_id ;;
-#   }
-#
-#   dimension: lifetime_orders {
-#     description: "The total number of orders for each user"
-#     type: number
-#     sql: ${TABLE}.lifetime_orders ;;
-#   }
-#
-#   dimension_group: most_recent_purchase {
-#     description: "The date when each user last ordered"
-#     type: time
-#     timeframes: [date, week, month, year]
-#     sql: ${TABLE}.most_recent_purchase_at ;;
-#   }
-#
-#   measure: total_lifetime_orders {
-#     description: "Use this for counting lifetime orders across many users"
-#     type: sum
-#     sql: ${lifetime_orders} ;;
-#   }
-# }

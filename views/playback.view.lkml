@@ -1,5 +1,22 @@
 view: playback {
-  sql_table_name: playback ;;
+  derived_table: {
+    sql_trigger_value: select current_date() ;;
+    sql:
+    SELECT *,
+  CASE
+  WHEN playback_location_type = 0 THEN "Video Page"
+  WHEN playback_location_type = 1 THEN "Embedded"
+  WHEN playback_location_type = 2 THEN "Channel Page"
+  WHEN playback_location_type = 5 THEN "Other"
+  WHEN playback_location_type = 7 THEN "In Browsing/Feed"
+  WHEN playback_location_type = 8 THEN "In Search" ELSE NULL
+  END as playback_location,
+  DATE (_PARTITIONTIME) AS _DATA_DATE,
+  GENERATE_UUID() as primary_key
+FROM
+  p_channel_playback_location_a2_daily_first;;
+
+  }
 
   dimension_group: _data {
     type: time
