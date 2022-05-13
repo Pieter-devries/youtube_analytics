@@ -16,42 +16,45 @@ explore: cascade_a { hidden: yes}
 
 ##########################################################################################
 
-view: cascade_c {
+# view: cascade_c {
 
 
-  derived_table: {
-    datagroup_trigger: eight_hours_trigger_datagroup
+#   derived_table: {
+#     datagroup_trigger: eight_hours_trigger_datagroup
 
-    sql: select * from looker-dcl-data.orders.orders where
-        DATE(created_at) = date_sub(CURRENT_DATE, interval {% parameter last_x_month %} month)
-        ;;
+#     sql: select * from looker-dcl-data.orders.orders where
+#         DATE(created_at) = date_sub(CURRENT_DATE, interval {% parameter last_x_month %} month)
+#         ;;
 
-    }
-  dimension: status {
-    sql: ${TABLE}.status;;
-  }
+#     }
+#   dimension: status {
+#     sql: ${TABLE}.status;;
+#   }
 
-  parameter: last_x_month {
-    type: number
-    default_value: "1"
-  }}
+#   parameter: last_x_month {
+#     type: number
+#     default_value: "1"
+#   }}
 
 view: cascade_d {
   derived_table: {
     datagroup_trigger: eight_hours_trigger_datagroup
 
     sql: select * from looker-dcl-data.orders.orders where
-        1 =  {% parameter last_x_month %}
+        1 = {% parameter last_x_month %}
               ;;
   }
+
+  parameter: last_x_month {
+      type: number
+      default_value: "1"
+    }
+
   dimension: status {
     sql: ${TABLE}.status;;
   }
 
-    parameter: last_x_month {
-      type: number
-      default_value: "1"
-    }}
+    }
 
 ##########################################################################################
 
