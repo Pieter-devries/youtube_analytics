@@ -17,7 +17,7 @@ view: cascade_a {
       datagroup_trigger: eight_hours_trigger_datagroup
 
       sql: select * from looker-dcl-data.orders.orders where
-          DATE(created_at) = date_sub(CURRENT_DATE, interval {% parameter last_x_month %} month)
+          1 =  {% parameter last_x_month %}
                 ;;
 
 }
