@@ -14,6 +14,11 @@ view: cascade_a {
   dimension: label {}
 }
 
+explore: cascade_a { hidden: yes}
+
+
+
+##########################################################################################
 
 view: cascade_c {
 
@@ -39,7 +44,6 @@ view: cascade_d {
     sql: select * from looker-dcl-data.orders.orders where
         1 =  {% parameter last_x_month %}
               ;;
-
   }
 
     parameter: last_x_month {
@@ -47,8 +51,7 @@ view: cascade_d {
       default_value: "1"
     }}
 
-
-  explore: cascade_a { hidden: yes}
+##########################################################################################
 
   view: cascade_b {
     derived_table: {
