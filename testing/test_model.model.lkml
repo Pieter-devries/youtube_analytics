@@ -9,3 +9,4 @@ sql_trigger: SELECT CURRENT_TIME() ;;
 }
 
 explore: cascade_c {}
+explore: cascade_d {}
