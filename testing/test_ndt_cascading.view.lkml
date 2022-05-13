@@ -4,10 +4,34 @@ view: cascade_a {
     persist_for: "10 seconds"
   }
 
-parameter: label_param {
-  default_value: "A"
+
+  parameter: label_param {
+    default_value: "A"
+  }
+  dimension: label {}
 }
-dimension: label {}
+
+
+  view: cascade_c {
+    derived_table: {
+      datagroup_trigger: eight_hours_trigger_datagroup
+
+      sql: select * from looker-dcl-data.orders.orders where
+          DATE(created_at) = date_sub(CURRENT_DATE, interval {% parameter last_x_month %} month)
+                ;;
+
+}
+
+    parameter: last_x_month {
+      type: number
+##description: "default start time = Feb 1,2020"
+      default_value: "1"
+    }
+
+dimension: status {
+  sql: ${TABLE}.status;;
+}
+
 }
 
 explore: cascade_a { hidden: yes}
