@@ -4,7 +4,7 @@ include: "*.view.lkml"
 
 
 datagroup: eight_hours_trigger_datagroup{
-sql_trigger: SELECT ‎CURRENT_TIME() ;;
+sql_trigger: SELECT CURRENT_TIME() ;;
 
 }
 

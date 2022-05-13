@@ -21,10 +21,14 @@ view: cascade_a {
                 ;;
 
 }
+    # derived_table: {
+    #   datagroup_trigger: eight_hours_trigger_datagroup
 
+    #   sql: select {% parameter last_x_month %} AS TEST     ;;
+
+    #   }
     parameter: last_x_month {
       type: number
-##description: "default start time = Feb 1,2020"
       default_value: "1"
     }
 
