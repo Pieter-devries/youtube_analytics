@@ -3,10 +3,6 @@ view: cascade_a {
     sql: select {% parameter label_param %} as label ;;
     persist_for: "10 seconds"
   }
-  dimension: status {
-    sql: ${TABLE}.status;;
-  }
-
 
   parameter: label_param {
     default_value: "A"
@@ -31,6 +27,9 @@ view: cascade_c {
         ;;
 
     }
+  dimension: status {
+    sql: ${TABLE}.status;;
+  }
 
   parameter: last_x_month {
     type: number
@@ -44,6 +43,9 @@ view: cascade_d {
     sql: select * from looker-dcl-data.orders.orders where
         1 =  {% parameter last_x_month %}
               ;;
+  }
+  dimension: status {
+    sql: ${TABLE}.status;;
   }
 
     parameter: last_x_month {
