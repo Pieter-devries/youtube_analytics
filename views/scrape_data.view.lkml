@@ -2,7 +2,7 @@ view: scrape_data {
   derived_table: {
   sql_trigger_value: 1;;
   sql:
-  SELECT *
+  SELECT DISTINCT *
   FROM scrape_data
     ;;
 }

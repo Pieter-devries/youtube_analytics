@@ -8,7 +8,7 @@ view: channel_basic_a2_daily_first {
     datagroup_trigger: youtube_transfer
     sql:
           SELECT
-          row_number() OVER(ORDER BY _PARTITIONTIME) AS prim_key,
+          GENERATE_UUID() AS prim_key,
           *,
 --          max(date) as max_date,
 --          min(date) as min_date
@@ -87,7 +87,7 @@ view: channel_basic_a2_daily_first {
     ]
     convert_tz: no
     datatype: date
-    sql: ${TABLE}._PARTITIONTIME ;;
+    sql: PARSE_DATE("%Y%m%d",${TABLE}.date) ;;
   }
  　
   measure: the_latest_date {
