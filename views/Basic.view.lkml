@@ -32,6 +32,11 @@ view: channel_basic_a2_daily_first {
     sql: ${TABLE}.vid ;;
   }
 
+  dimension: play_button {
+    sql: 1 ;;
+    html: <img src="https://logo-core.clearbit.com/looker.com" /> ;;
+  }
+
   dimension: more_details {
     type: string
     sql: "For more details.." ;;

@@ -1,7 +1,6 @@
 view: cascade_a {
   derived_table: {
     sql: select {% parameter label_param %} as label ;;
-    persist_for: "10 seconds"
   }
 
 parameter: label_param {
@@ -23,5 +22,28 @@ view: cascade_b {
 }
 
 explore: cascade_b {
+  hidden: yes
+}
+
+# view: cascade_c {
+#   derived_table: {
+#     explore_source: cascade_a {
+#       column: label {}
+#       bind_filters: {
+#         to_field: cascade_a.label_param
+#         from_field: cascade_c.label_param
+#       }
+#     }
+#     # persist_for: "12 hours"
+#   }
+#   parameter: label_param {
+#     default_value: "A"
+#   }
+#   dimension: label {}
+# }
+
+explore: cascade_c {
+  view_name: cascade_a
+  join: cascade_b {}
   hidden: yes
 }
