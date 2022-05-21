@@ -1,6 +1,7 @@
 view: traffic_source {
   derived_table: {
     sql_trigger_value: select current_date() ;;
+    publish_as_db_view: yes
     sql:
       SELECT
       *,

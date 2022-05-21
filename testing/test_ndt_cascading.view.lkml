@@ -7,7 +7,26 @@ view: cascade_a {
     default_value: "A"
   }
   dimension: label {}
+  filter: today {
+    type: date
+    default_value: "today"
+  }
+
+parameter: date_filter {
+  allowed_value: {
+    label: "今日"
+    value: "today"
+  }
+  allowed_value: {
+    label: "直近7日間"
+    value: "last_7_days"
+  }
 }
+
+
+}
+
+
 
 explore: cascade_b {
   hidden: yes
