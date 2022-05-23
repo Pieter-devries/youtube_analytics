@@ -5,7 +5,7 @@ view: traffic_source {
     sql:
       SELECT
       *,
-      DATE (_PARTITIONTIME) AS _DATA_DATE,
+      PARSE_DATE("%Y%m%d",date) AS _DATA_DATE,
       CASE WHEN traffic_source_type = 0 THEN "Direct or Unknown"
            WHEN traffic_source_type = 1 THEN "Youtube Advertising"
            WHEN traffic_source_type = 3 THEN "Browse Features"
@@ -32,13 +32,26 @@ view: traffic_source {
       date,
       day_of_month,
       week,
+      day_of_week,
       month,
       quarter,
       year
     ]
     convert_tz: no
     datatype: date
-    sql: ${TABLE}._PARTITIONTIME ;;
+    sql: ${TABLE}._DATA_DATE ;;
+  }
+
+  dimension: day_of_week_colored {
+    group_label: "Data Date"
+    sql: ${_data_day_of_week} ;;
+    html:
+    {% if value != "Sunday" and value != "Saturday"%}
+    <font color="green">{{ value }}</font>
+    {% else %}
+    <font color="blue">{{ value }}</font>
+    {% endif %}
+    ;;
   }
 
   dimension: primary_key {
@@ -74,9 +87,26 @@ view: traffic_source {
     drill_fields: [scrape_data.title,channel_basic_a2_daily_first.video_stats*]
   }
 
-  measure: views {
-    type: sum
+  dimension: views {
+    type: number
     sql: ${TABLE}.views ;;
+  }
+
+  measure: total_views {
+    type: sum
+    sql: ${views} ;;
+  }
+
+  measure: formatted_total_views {
+    type: sum
+    sql: ${views} ;;
+    html:
+    {% if day_of_week_colored._value != "Sunday" and day_of_week_colored._value != "Saturday"%}
+    <font color="green">{{ value }}</font>
+    {% else %}
+    <font color="blue">{{ value }}</font>
+    {% endif %}
+    ;;
   }
 
   measure: watch_time_minutes {
