@@ -11,7 +11,7 @@ view: playback {
   WHEN playback_location_type = 7 THEN "In Browsing/Feed"
   WHEN playback_location_type = 8 THEN "In Search" ELSE NULL
   END as playback_location,
-  DATE (_PARTITIONTIME) AS _DATA_DATE,
+  PARSE_DATE("%Y%m%d",date) AS _DATA_DATE,
   GENERATE_UUID() as primary_key
 FROM
   p_channel_playback_location_a2_daily_first;;
@@ -30,7 +30,7 @@ FROM
     ]
     convert_tz: no
     datatype: date
-    sql: ${TABLE}._PARTITIONTIME ;;
+    sql: ${TABLE}._DATA_DATE ;;
   }
 
   dimension: average_view_duration_seconds {
