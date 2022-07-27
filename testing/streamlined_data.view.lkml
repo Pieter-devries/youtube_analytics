@@ -33,6 +33,31 @@ view: streamlined_data {
     default_value: "test"
   }
 
+  dimension: action_test_works {
+    type: string
+    sql: 1 ;;
+    action: {
+      label: "ping action test"
+      url: "https://us-central1-looker-dcl-data.cloudfunctions.net/looker_action_test"
+      param: {
+        name: "test"
+        value: "{{value}}"
+      }
+    }
+  }
+  dimension: action_test_fails {
+    type: string
+    sql: 1 ;;
+    action: {
+      label: "ping action test"
+      url: "https://us-central1-looker-dcl-data.cloudfunctions.net/looker_action_test_fails"
+      param: {
+        name: "test"
+        value: "{{value}}"
+      }
+    }
+  }
+
   measure: test_liquid_label_measure {
     type: sum
     label:
