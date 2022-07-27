@@ -3,7 +3,7 @@ view: blocks {
     sql:
       SELECT *
       FROM `bigquery-public-data.crypto_bitcoin.blocks`
-      WHERE {% condition date_filter%} block_timestamp {% endcondition %};;
+      WHERE {% condition date_filter%} blocks.block_timestamp {% endcondition %};;
   }
 
   filter: date_filter {

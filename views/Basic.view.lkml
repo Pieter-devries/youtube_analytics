@@ -19,6 +19,18 @@ view: channel_basic_a2_daily_first {
 
   drill_fields: [scrape_data.video_name,views]
 
+#####
+#TEST
+#####
+
+
+  # dimension: get_filters {
+  #   sql: {{_filters['scrape_data.episode_number']}} ;;
+  # }
+
+
+
+####
   dimension: prim_key {
     hidden: yes
     type: number

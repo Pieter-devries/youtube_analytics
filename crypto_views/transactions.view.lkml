@@ -2,8 +2,8 @@ view: transactions {
   derived_table: {
     sql:
       SELECT *
-      FROM `bigquery-public-data.crypto_bitcoin.transactions`
-      WHERE {% condition date_filter%} block_timestamp {% endcondition %};;
+      FROM `bigquery-public-data.crypto_bitcoin.transactions` as transactions
+      WHERE {% condition date_filter%} transactions.block_timestamp {% endcondition %};;
   }
 
   filter: date_filter {

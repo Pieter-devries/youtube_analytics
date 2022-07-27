@@ -34,6 +34,7 @@ view: scrape_data {
   }
 
   dimension: playlist_name {
+    drill_fields: [episode_number,basic.views]
     view_label: "Basic"
     group_label: "Video Info"
     sql:
