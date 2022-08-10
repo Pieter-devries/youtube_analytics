@@ -28,7 +28,7 @@ view: scrape_data {
     sql:
     CASE
       WHEN SUBSTR(${video_name},STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"([0-9]話)")),0) IS NOT NULL
-        THEN TRIM(REGEXP_REPLACE(SUBSTR(${video_name},STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"( [0-9])")),4),r"\D+",""))
+        THEN CAST(TRIM(REGEXP_REPLACE(SUBSTR(${video_name},STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"( [0-9])")),4),r"\D+","")) as NUMERIC)
       ELSE null
     END;;
   }

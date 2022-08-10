@@ -33,6 +33,11 @@ view: streamlined_data {
     default_value: "test"
   }
 
+  dimension: picture {
+    sql: 1 ;;
+    html: <img src="https://cdn-ssl-devio-img.classmethod.jp/wp-content/uploads/2020/05/looker-logo-google_1200x630-960x504.png"/> ;;
+  }
+
   dimension: action_test_works {
     type: string
     sql: 1 ;;
