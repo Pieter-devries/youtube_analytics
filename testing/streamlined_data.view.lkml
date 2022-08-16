@@ -168,6 +168,16 @@ view: streamlined_data {
     sql: ${TABLE}.subscribed_status ;;
   }
 
+  dimension: html_test {
+    sql: ${subscribed_status} ;;
+    html:
+    {% if value != "subscribed" %}
+    <font color="red"> {{rendered_value}} </font>
+    {% else %}
+    {{rendered_value}}
+    {% endif %};;
+  }
+
   dimension: subscribers_gained {
     type: number
     sql: ${TABLE}.subscribers_gained ;;
