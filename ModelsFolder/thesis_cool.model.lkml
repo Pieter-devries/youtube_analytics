@@ -66,7 +66,7 @@ explore: channel_basic_a2_daily_first {
     measures: [traffic.views]
     sorts: [traffic.views: desc ]
   }
-  label: "Master Explore"
+  label: "Master  Explore"
   aggregate_table: views_last_7_days {
     query:  {
       dimensions: [channel_basic_a2_daily_first.date]
