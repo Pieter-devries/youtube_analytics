@@ -28,6 +28,11 @@ view: streamlined_data {
   #   END ;;
   #   }
 
+  dimension: raw_data {
+    type: date_raw
+    sql: ${TABLE}.date ;;
+  }
+
   filter: test_liquid_labels {
     type: string
     default_value: "test"

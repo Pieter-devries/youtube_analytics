@@ -3,3 +3,5 @@
 constant: connection {
   value: "youtube_database"
 }
+
+new_lookml_runtime: no
