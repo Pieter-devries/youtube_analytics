@@ -217,4 +217,20 @@ view: streamlined_data {
     type: count
     drill_fields: [video_name]
   }
+
+  measure: last_year {
+    type: count
+  }
+
+  measure: last_year_ {
+    type: count
+  }
+
+  measure: sub_label {
+    type: count
+    label:
+    "
+    {{ streamlined_data.subscribed_status._value }}
+    "
+  }
 }

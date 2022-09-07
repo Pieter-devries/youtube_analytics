@@ -1,7 +1,12 @@
-#project_name: "youtube_analytics"
+project_name: "pieter"
+
+# # Use local_dependency: To enable referencing of another project
+# # on this instance with include: statements
+#
+# local_dependency: {
+#   project: "name_of_other_project"
+# }
 
 constant: connection {
   value: "youtube_database"
 }
-
-new_lookml_runtime: no
