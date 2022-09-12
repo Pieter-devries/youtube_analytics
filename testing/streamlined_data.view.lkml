@@ -218,7 +218,7 @@ view: streamlined_data {
     drill_fields: [video_name]
   }
 
-  measure: last_year {
+  measure: happy_man {
     type: count
   }
 
