@@ -7,6 +7,11 @@ project_name: "pieter"
 #   project: "name_of_other_project"
 # }
 
+remote_dependency: test {
+  url: "https://github.com/pietermdevries/test-instance"
+  ref: "master"
+}
+
 constant: connection {
   value: "youtube_database"
 }
