@@ -7,7 +7,7 @@ include: "/testing/*.view.lkml"                # include all views in the views/
 explore: test_explore {
   view_name: streamlined_data
 
-  aggregate_table: views_last_7_days {
+  aggregate_table: new_name {
     query:  {
       dimensions: [streamlined_data.date_date]
       measures: [streamlined_data.total_views]
