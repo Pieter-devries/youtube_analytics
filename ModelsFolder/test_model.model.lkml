@@ -6,6 +6,16 @@ include: "/testing/*.view.lkml"                # include all views in the views/
 
 explore: test_explore {
   view_name: streamlined_data
+
+  aggregate_table: views_last_7_days {
+    query:  {
+      dimensions: [streamlined_data.date_date]
+      measures: [streamlined_data.total_views]
+    }
+    materialization: {
+      sql_trigger_value: 1 ;;
+    }
+  }
 }
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.

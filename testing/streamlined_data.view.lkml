@@ -218,6 +218,11 @@ view: streamlined_data {
     drill_fields: [video_name]
   }
 
+  measure: total_views {
+    type: sum
+    sql: ${views} ;;
+  }
+
   measure: happy_man {
     type: count
   }
