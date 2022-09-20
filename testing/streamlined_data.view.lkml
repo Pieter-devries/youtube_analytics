@@ -45,7 +45,7 @@ view: streamlined_data {
 
   dimension: action_test_works {
     type: string
-    sql: 1 ;;
+    sql: 2 ;;
     action: {
       label: "ping action test"
       url: "https://us-central1-looker-dcl-data.cloudfunctions.net/looker_action_test"
@@ -161,6 +161,7 @@ view: streamlined_data {
   dimension: live_or_on_demand {
     type: string
     sql: ${TABLE}.live_or_on_demand ;;
+    order_by_field: subscribed_status
   }
 
   dimension: shares {
