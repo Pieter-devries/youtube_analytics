@@ -48,7 +48,7 @@ view: streamlined_data {
     sql: 2 ;;
     action: {
       label: "ping action test"
-      url: "https://us-central1-looker-dcl-data.cloudfunctions.net/looker_action_test"
+      url: "https://test-mlms43ancq-an.a.run.app"
       param: {
         name: "test"
         value: "{{value}}"
@@ -148,6 +148,11 @@ view: streamlined_data {
     sql: ${TABLE}.date ;;
   }
 
+  dimension: week_start {
+    type: string
+    sql: ${date_week} ;;
+  }
+
   dimension: dislikes {
     type: number
     sql: ${TABLE}.dislikes ;;
@@ -222,6 +227,12 @@ view: streamlined_data {
   measure: total_views {
     type: sum
     sql: ${views} ;;
+    html:
+    <ul>
+    <li> value: {{ value }} </li>
+    <li> count: {{ count._value }} </li>
+    </ul>
+    ;;
   }
 
   measure: happy_man {
