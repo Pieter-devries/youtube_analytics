@@ -28,6 +28,15 @@ view: streamlined_data {
   #   END ;;
   #   }
 
+  dimension: html_br_test {
+    description: "control and treatment"
+    sql: concat("line1: ",
+          "value", "\nLine2: ",
+          "value") ;;
+    html: {{ value | newline_to_br }} ;;
+
+  }
+
   dimension: raw_data {
     type: date_raw
     sql: ${TABLE}.date ;;
@@ -141,6 +150,7 @@ view: streamlined_data {
       date,
       week,
       month,
+      month_name,
       quarter,
       year
     ]
@@ -150,9 +160,12 @@ view: streamlined_data {
 
   dimension: week_start {
     type: string
-    sql: ${date_week} ;;
+    sql:
+    CASE WHEN DATE_SUB(CURRENT_DATE(), INTERVAL 200 DAY) <
+    ${date_raw} THEN ${date_week}
+    ELSE null end;;
   }
-
+#DATE(left(${date_week},4),SUBSTR(${date_week},5,2),RIGHT(${date_week},2)
   dimension: dislikes {
     type: number
     sql: ${TABLE}.dislikes ;;

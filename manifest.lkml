@@ -7,6 +7,8 @@ project_name: "pieter"
 #   project: "name_of_other_project"
 # }
 
+new_lookml_runtime: no
+
 remote_dependency: test {
   url: "https://github.com/pietermdevries/test-instance"
   ref: "master"
