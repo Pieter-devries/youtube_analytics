@@ -21,8 +21,10 @@ view: new_lookml_always_filter_test {
 
 explore: new_lookml_always_filter_test {
   sql_always_where:
+  /*
+  parameter value: {% parameter new_lookml_always_filter_test.param %}
+  */
   true
-  -- parameter_value: !{% parameter new_lookml_always_filter_test.param %}!
   ;;
 
   always_filter: {

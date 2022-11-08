@@ -34,8 +34,29 @@ view: streamlined_data {
           "value", "\nLine2: ",
           "value") ;;
     html: {{ value | newline_to_br }} ;;
-
   }
+
+  dimension: html_br_withoutliquid_test {
+    description: "control and treatment"
+    sql: concat("line1: value,", "Line2: value") ;;
+    html:
+    {% assign lines = value | split: "," %}
+    {% for line in lines %}
+    {{ line }} <br />
+    {% endfor %}
+    ;;
+  }
+
+  dimension: html_test {
+    sql: ${subscribed_status} ;;
+    html:
+    {% if value != "subscribed" %}
+    <font color="red"> {{rendered_value}} </font>
+    {% else %}
+    {{rendered_value}}
+    {% endif %};;
+  }
+
 
   dimension: raw_data {
     type: date_raw
@@ -192,15 +213,6 @@ view: streamlined_data {
     sql: ${TABLE}.subscribed_status ;;
   }
 
-  dimension: html_test {
-    sql: ${subscribed_status} ;;
-    html:
-    {% if value != "subscribed" %}
-    <font color="red"> {{rendered_value}} </font>
-    {% else %}
-    {{rendered_value}}
-    {% endif %};;
-  }
 
   dimension: subscribers_gained {
     type: number
