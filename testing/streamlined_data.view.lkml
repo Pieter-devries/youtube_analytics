@@ -3,7 +3,7 @@ explore: streamlined_data {}
 view: streamlined_data {
   derived_table: {
     sql:
-    SELECT *
+    SELECT *,
     FROM `looker-dcl-data.pieteryoutube.streamlined_data`
     WHERE EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM CURRENT_DATE())
     ;;
@@ -11,22 +11,9 @@ view: streamlined_data {
 
   # sql_table_name: `looker-dcl-data.pieteryoutube.streamlined_data`    ;;
 
-  # parameter: date_selector {
-  #   label: "集計日の指定"
-  #   type: date_time
-  # }
-
-  # dimension: param_value {
-  #   sql: {% parameter date_selector %} ;;
-  # }
-
-  # dimension: receivable_status {
-  #   label: "ステータス"
-  #   sql:
-  #   CASE WHEN date({% parameter date_selector %}) < ${date_date} THEN 'Status 1'
-  #   ELSE 'Status 2'
-  #   END ;;
-  #   }
+  dimension: deleteme {
+    sql: 1 ;;
+  }
 
   dimension: html_br_test {
     description: "control and treatment"
@@ -36,9 +23,13 @@ view: streamlined_data {
     html: {{ value | newline_to_br }} ;;
   }
 
+  dimension: new_line_sql {
+    sql: "line1: value\nLine2: value" ;;
+  }
+
   dimension: html_br_withoutliquid_test {
     description: "control and treatment"
-    sql: concat("line1: value,", "Line2: value") ;;
+    sql: REPLACE(${new_line_sql}, "\n", ",") ;;
     html:
     {% assign lines = value | split: "," %}
     {% for line in lines %}
@@ -55,6 +46,20 @@ view: streamlined_data {
     {% else %}
     {{rendered_value}}
     {% endif %};;
+  }
+
+  dimension: sample_data {
+    sql:
+    CASE
+    WHEN ${likes} = 1 THEN "hi"
+    WHEN ${likes} = 2 THEN "hip"
+    WHEN ${likes} = 3 THEN "hipe"
+    WHEN ${likes} = 4 THEN "hiped"
+    WHEN ${likes} = 5 THEN "hipeds"
+    WHEN ${likes} = 6 THEN "hipacs"
+    ELSE "h"
+    END
+    ;;
   }
 
 
