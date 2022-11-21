@@ -11,9 +11,6 @@ view: streamlined_data {
 
   # sql_table_name: `looker-dcl-data.pieteryoutube.streamlined_data`    ;;
 
-  dimension: deleteme {
-    sql: 1 ;;
-  }
 
   dimension: html_br_test {
     description: "control and treatment"
