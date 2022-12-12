@@ -332,10 +332,18 @@ view: channel_basic_a2_daily_first {
     label: "Total Views"
     type: sum
     sql: ${view_num} ;;
-    # link: {
-    #    label: "View Indepth"
-    #    url: "/dashboards/7?VideoID={{[video_id | url_encode}}&Title={{title | url_encode}}"
-    # }
+  }
+
+  measure: zero_views {
+    type: sum
+    sql: ${view_num} ;;
+    html:
+    {% if value %}
+    {{ value }}
+    {% else %}
+    0
+    {% endif %}
+    ;;
   }
 
   dimension: watch_time_min {
