@@ -131,6 +131,7 @@ explore: genre_total {
 }
 
 explore: traffic_source {
+  description: "this is my description"
   join: scrape_data {
     type: left_outer
     sql_on: ${traffic_source.video_id} = ${scrape_data.video_id} ;;

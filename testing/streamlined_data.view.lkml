@@ -1,9 +1,42 @@
-explore: streamlined_data {}
+explore: streamlined_data {
+  join: rank_views_by_data {
+    sql_on: ${streamlined_data.subscribed_status} = ${rank_views_by_data.subscribed_status} ;;
+  }
+}
+
+view: rank_views_by_data {
+  derived_table: {
+    sql:
+    SELECT
+    subscribed_status,
+    RANK() OVER (ORDER BY COALESCE(SUM(views), 0) DESC) AS rank
+    FROM `looker-dcl-data.pieteryoutube.streamlined_data`
+    WHERE EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM CURRENT_DATE())
+    GROUP BY 1
+    ;;
+
+  }
+
+# dimension_group: date {
+#   type: time
+#   timeframes: [raw]
+#   sql: ${TABLE}.date ;;
+# }
+
+dimension: subscribed_status {
+  sql: ${TABLE}.subscribed_status ;;
+}
+
+dimension: rank {
+  type: number
+  sql: ${TABLE}.rank ;;
+}
+}
 
 view: streamlined_data {
   derived_table: {
     sql:
-    SELECT *,
+    SELECT *
     FROM `looker-dcl-data.pieteryoutube.streamlined_data`
     WHERE EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM CURRENT_DATE())
     ;;
@@ -180,7 +213,7 @@ view: streamlined_data {
     datatype: datetime
     sql: ${TABLE}.date ;;
   }
-
+　
   dimension: week_start {
     type: string
     sql:
@@ -213,6 +246,7 @@ view: streamlined_data {
   dimension: subscribed_status {
     type: string
     sql: ${TABLE}.subscribed_status ;;
+
   }
 
 
@@ -254,12 +288,12 @@ view: streamlined_data {
   measure: total_views {
     type: sum
     sql: ${views} ;;
-    html:
-    <ul>
-    <li> value: {{ value }} </li>
-    <li> count: {{ count._value }} </li>
-    </ul>
-    ;;
+    # html:
+    # <ul>
+    # <li> value: {{ value }} </li>
+    # <li> count: {{ count._value }} </li>
+    # </ul>
+    # ;;
   }
 
   measure: happy_man {

@@ -125,4 +125,8 @@ view: traffic_source {
     sql: ${TABLE}.average_view_duration_percentage  ;;
     value_format: "0.xx\%"
   }
+
+  measure: count {
+    type: count
+  }
 }
