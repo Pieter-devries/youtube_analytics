@@ -1,5 +1,7 @@
 include: "*.view.lkml"
 
+explore: created_dt {}
+
 explore: test_explore {
   extension: required
   view_name: streamlined_data

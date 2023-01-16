@@ -28,7 +28,6 @@ dimension: subscribed_status {
 }
 
 dimension: rank {
-  type: number
   sql: ${TABLE}.rank ;;
 }
 }
