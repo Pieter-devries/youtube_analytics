@@ -399,6 +399,20 @@ view: channel_basic_a2_daily_first {
     }
   }
 
+  ###
+  measure: test_multi_measure {
+    type: number
+    sql:
+    CASE
+      WHEN ${watch_time_minutes} > 1 then 1000.0
+      WHEN ${watch_time_hours} > 1 then 05.04500
+      WHEN ${view_per_video} > 1 then 05.01000000
+      END;;
+    html: {{value}} ;;
+  }
+
+  ###
+
   measure: count_videos {
     group_label: "Video"
     type: count_distinct

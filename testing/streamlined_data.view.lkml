@@ -37,11 +37,22 @@ view: streamlined_data {
     sql:
     SELECT *
     FROM `looker-dcl-data.pieteryoutube.streamlined_data`
-    WHERE EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM CURRENT_DATE())
+    -- WHERE EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM CURRENT_DATE())
     ;;
   }
 
   # sql_table_name: `looker-dcl-data.pieteryoutube.streamlined_data`    ;;
+
+
+  dimension: timestamp_test {
+    type: date_time
+    sql: CURRENT_TIMESTAMP() ;;
+  }
+
+  dimension: timestamp_test_2 {
+    type: date_time
+    sql: TIMESTAMP(EXTRACT(DATETIME FROM CURRENT_TIMESTAMP()), 'Asia/Tokyo') ;;
+  }
 
 
   dimension: html_br_test {
@@ -245,7 +256,14 @@ view: streamlined_data {
   dimension: subscribed_status {
     type: string
     sql: ${TABLE}.subscribed_status ;;
-
+    html:
+    {% if subscribed_status._value == "not_subscribed" %}
+    <p style="background-color: blue; color: white">{{ rendered_value }}</p>
+    {% elsif subscribed_status._value == "subscribed" %}
+    <p style="background-color: green; color: white">{{ rendered_value }}</p>
+    {% else %}
+    {{ rendered_value }}
+    {% endif %};;
   }
 
 
@@ -282,6 +300,15 @@ view: streamlined_data {
   measure: count {
     type: count
     drill_fields: [video_name]
+      html:
+       {% if subscribed_status._value == "not_subscribed" %}
+         <p style="background-color: blue">{{ rendered_value }}</p>
+       {% elsif subscribed_status._value == "subscribed" %}
+         <p style="background-color: green">{{ rendered_value }}</p>
+       {% else %}
+         {{ rendered_value }}
+       {% endif %};;
+
   }
 
   measure: total_views {
@@ -293,10 +320,18 @@ view: streamlined_data {
     # <li> count: {{ count._value }} </li>
     # </ul>
     # ;;
+  # link: {
+  #   label: "xxx"
+  #   url: "https://www.google.com"
+  # }
+
+  # html: <a href="https://www.google.com">{{value}}</a> ;;
   }
 
-  measure: happy_man {
-    type: count
+  measure: html_measure {
+    type: number
+    sql: sum(1) ;;
+    html: {{ count._value | minus: total_views._value }} ;;
   }
 
   measure: last_year_ {
@@ -310,4 +345,28 @@ view: streamlined_data {
     {{ streamlined_data.subscribed_status._value }}
     "
   }
+
+## parameter_value in measure test ##
+  parameter: connected_table_name {
+    type: unquoted
+    label: "集計年度"
+    allowed_value: {label:"2022年度" value:"data_list_2022"}
+    allowed_value: {label:"2021年度" value:"data_list_2021"}
+  }
+
+  dimension_group: param_sql_test_dim {
+    sql:
+    {% if connected_table_name._parameter_value contains '2021' %}
+    1
+    {% else %}
+    2
+    {% endif %};;
+  }
+
+## dashboard_url
+
+dimension: dashboard_url {
+  sql: '{{_explore._dashboard_url}}' ;;
+}
+
 }
