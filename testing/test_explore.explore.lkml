@@ -47,5 +47,6 @@ explore: test_dashboard_url {
   1=1
   {% else %}
   2=2
+  {% endif %}
   ;;
 }
