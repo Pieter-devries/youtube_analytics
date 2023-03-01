@@ -12,7 +12,7 @@ explore: test_conditional_where {
 }
 
 explore: test_explore {
-  extension: required
+  # extension: required
   view_name: streamlined_data
 
   aggregate_table: new_name {
@@ -43,7 +43,7 @@ explore: test_sql_where {
 explore: test_dashboard_url {
   view_name: streamlined_data
   sql_always_where:
-  {% if streamlined_data.dashboard_url == '1' %}
+  {% if dashboard_url._value == '/dashboards/null' %}
   1=1
   {% else %}
   2=2
