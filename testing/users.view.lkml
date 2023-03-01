@@ -1,4 +1,4 @@
-view: users {
+view: bob {
   # sql_table_name: bigquery-public-data.thelook_ecommerce.users ;;
 
   derived_table: {
@@ -30,4 +30,4 @@ view: users {
   }
 }
 
-explore: users {}
+explore: bob {}
