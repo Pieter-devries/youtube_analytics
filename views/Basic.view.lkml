@@ -106,6 +106,75 @@ view: channel_basic_a2_daily_first {
     datatype: date
     sql: PARSE_DATE("%Y%m%d",${TABLE}.date) ;;
   }
+
+  filter: special_filter {
+    label: "特別フィルター"
+    type: date
+    datatype: date
+    group_label: "年テスト"
+  }
+
+  dimension: special_date {
+    label: "特別日付"
+    type: date
+    datatype: date
+    sql:
+    CASE WHEN ${current} THEN ${_data_date} ELSE NULL END ;;
+  }
+
+
+  dimension: filter_start_date {
+    hidden: yes
+    type: date
+    datatype: date
+    sql: {% date_start special_filter %};;
+  }
+  dimension: filter_end_date {
+    hidden: yes
+    type: date
+    datatype: date
+    sql: {% date_end special_filter %};;
+  }
+
+  dimension: previous_start_date {
+    hidden: yes
+    type: string
+    sql: DATE_SUB(${filter_start_date}, INTERVAL 1 YEAR);;
+  }
+
+  dimension: previous_end_date {
+    hidden: yes
+    type: string
+    sql: DATE_SUB(${filter_end_date}, INTERVAL 1 YEAR);;
+  }
+
+  dimension: current {
+    hidden: yes
+    type: yesno
+    sql: {% condition special_filter %} ${_data_date} {% endcondition %} ;;
+  }
+
+  dimension: previous {
+    # hidden: yes
+    type: yesno
+    sql: ${_data_date} >= ${previous_start_date} AND ${_data_date} <= ${previous_end_date} ;;
+  }
+
+  measure: this_year {
+    label: "今年"
+    group_label: "年テスト"
+    type: sum
+    sql: ${view_num};;
+    filters: [current: "yes"]
+  }
+
+  measure: last_year {
+    label: "昨年"
+    group_label: "年テスト"
+    type: sum
+    sql: ${view_num};;
+    filters: [previous: "yes"]
+  }
  　
   measure: the_latest_date {
     type: date

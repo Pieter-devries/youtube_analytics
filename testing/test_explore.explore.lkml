@@ -40,13 +40,13 @@ explore: test_sql_where {
   sql_always_where: ${second_table.video_name} = ${streamlined_data.video_name} ;;
 }
 
-explore: test_dashboard_url {
-  view_name: streamlined_data
-  sql_always_where:
-  {% if dashboard_url._value == '/dashboards/null' %}
-  1=1
-  {% else %}
-  2=2
-  {% endif %}
-  ;;
-}
+# explore: test_dashboard_url {
+#   view_name: streamlined_data
+#   sql_always_where:
+#   {% if dashboard_url._value == '/dashboards/null' %}
+#   1=1
+#   {% else %}
+#   2=2
+#   {% endif %}
+#   ;;
+# }
