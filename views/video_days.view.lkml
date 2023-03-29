@@ -27,6 +27,12 @@ view: video_days {
     drill_fields: [detail*]
   }
 
+  measure: total_views {
+    label: "日本語です"
+    type: sum
+    sql: ${views} ;;
+  }
+
   dimension: video_id {
     type: string
     sql: ${TABLE}.video_id ;;

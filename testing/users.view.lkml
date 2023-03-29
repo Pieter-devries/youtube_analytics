@@ -12,13 +12,13 @@ view: bob {
 
   dimension: city {
     sql: ${TABLE}.city ;;
-    html:
-    {% if rank._value <= 5 %}
-    <font color="green">{{ value }}</font>
-    {% else %}
-    <font color="black">{{ value }}</font>
-    {% endif %}
-    ;;
+    # html:
+    # # {% if rank._value <= 5 %}
+    # # <font color="green">{{ value }}</font>
+    # # {% else %}
+    # # <font color="black">{{ value }}</font>
+    # # {% endif %}
+    # ;;
   }
 
   dimension: rank {
