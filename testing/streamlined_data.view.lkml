@@ -346,6 +346,13 @@ view: streamlined_data {
     "
   }
 
+measure: xxx {
+  view_label: "日本語です"
+  group_label: "{%if _explore._name == 'test_explore' %}コレコレ{% else %}{% endif %}"
+  group_item_label: "{%if _explore._name == 'test_explore' %}コレコレ{% else %}{% endif %}"
+  label: "このこの"
+}
+
 ## parameter_value in measure test ##
   parameter: connected_table_name {
     type: unquoted
