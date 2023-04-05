@@ -2,6 +2,8 @@ connection: "youtube_database"
 
 include: "test_explore.explore"
 
+fiscal_month_offset: -1
+
 datagroup: test_dg {
   max_cache_age: "1 hour"
   sql_trigger: current_date() ;;

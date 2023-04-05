@@ -88,6 +88,16 @@ view: streamlined_data {
     {% endif %};;
   }
 
+  dimension: liq_num {
+    sql: 1 ;;
+    html:
+    {% assign bob = 10 %}
+    {% assign jack = 10 %}
+    {{ bob | plus: jack }}
+
+    ;;
+  }
+
   dimension: sample_data {
     sql:
     CASE
@@ -218,7 +228,10 @@ view: streamlined_data {
       month,
       month_name,
       quarter,
-      year
+      year,
+      month_num,
+      fiscal_month_num,
+      fiscal_year
     ]
     datatype: datetime
     sql: ${TABLE}.date ;;
