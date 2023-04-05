@@ -93,10 +93,24 @@ view: streamlined_data {
     html:
     {% assign bob = 10 %}
     {% assign jack = 10 %}
-    {{ bob | plus: jack }}
-
+    {% if (bob | plus: jack) > 1 %}
+    hi
+    {% endif %}
     ;;
   }
+
+  dimension: liq_num2 {
+    sql: 1 ;;
+    html:
+    {% assign bob = 10 %}
+    {% assign jack = 10 %}
+    {% assign sally = bob | plus: jack%}
+    {% if sally > 1 %}
+    hi
+    {% endif %}
+    ;;
+  }
+
 
   dimension: sample_data {
     sql:
