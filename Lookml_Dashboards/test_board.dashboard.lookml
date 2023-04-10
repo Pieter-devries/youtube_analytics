@@ -94,7 +94,7 @@
   - name: " Data Date"
     title: " Data Date"
     type: field_filter
-    default_value: today
+    default_value: NOT NULL
     allow_multiple_values: true
     required: false
     ui_config:
