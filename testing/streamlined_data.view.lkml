@@ -1,6 +1,7 @@
 explore: streamlined_data {
   join: rank_views_by_data {
     sql_on: ${streamlined_data.subscribed_status} = ${rank_views_by_data.subscribed_status} ;;
+    relationship: one_to_one
   }
 }
 
@@ -43,6 +44,23 @@ view: streamlined_data {
 
   # sql_table_name: `looker-dcl-data.pieteryoutube.streamlined_data`    ;;
 
+  dimension: user_attribute {
+    type: string
+    sql:
+      {% if _user_attributes['role'] == 'admin' %}
+      ${country_code}
+      {% elsif _user_attributes['role'] == 'user' %}
+      ${date_year}
+      {% endif %}
+      ;;
+  }
+
+  measure: total_amount {
+    type: sum
+    value_format_name: usd
+    sql: ${views} ;;
+    html: @{negative_format} ;;
+  }
 
   dimension: timestamp_test {
     type: date_time
@@ -88,16 +106,16 @@ view: streamlined_data {
     {% endif %};;
   }
 
-  dimension: liq_num {
-    sql: 1 ;;
-    html:
-    {% assign bob = 10 %}
-    {% assign jack = 10 %}
-    {% if (bob | plus: jack) > 1 %}
-    hi
-    {% endif %}
-    ;;
-  }
+  # dimension: liq_num {
+  #   sql: 1 ;;
+  #   html:
+  #   {% assign bob = 10 %}
+  #   {% assign jack = 10 %}
+  #   {% if (bob | plus: jack) > 1 %}
+  #   hi
+  #   {% endif %}
+  #   ;;
+  # }
 
   dimension: liq_num2 {
     sql: 1 ;;

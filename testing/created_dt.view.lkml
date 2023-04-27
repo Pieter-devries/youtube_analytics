@@ -1,15 +1,15 @@
 view: created_dt {
 derived_table: {
-  sql: SELECT '1127.920000' as number
-  UNION ALL SELECT '1039.920000' as number
-  UNION ALL SELECT '366300.000000' as number
-  UNION ALL SELECT '7774.000000' as number
-  UNION ALL SELECT '1.55000000' as number
-  UNION ALL SELECT '1.25' as number
-  UNION ALL SELECT '1.0' as number
-  UNION ALL SELECT '1.05' as number
-  UNION ALL SELECT '11.05' as number
-  UNION ALL SELECT '20.50' as number
+  sql: SELECT '1127.920000' as number, '風邪薬' as product
+  UNION ALL SELECT '1039.920000' as number, '衛生管理' as product
+  UNION ALL SELECT '366300.000000' as number, '日用品' as product
+  UNION ALL SELECT '7774.000000' as number, '冷凍食品' as product
+  UNION ALL SELECT '1.55000000' as number, 'ベビー' as product
+  UNION ALL SELECT '1.25' as number, 'ペット用品' as product
+  UNION ALL SELECT '1.0' as number, 'プロティン' as product
+  UNION ALL SELECT '1.05' as number, 'チョコレート' as product
+  UNION ALL SELECT '11.05' as number, 'ソフトドリンク' as product
+  UNION ALL SELECT '20.50' as number, 'サプリメント' as product
   ;;
 }
 
@@ -17,6 +17,8 @@ dimension: num {
   type: number
   sql: ${TABLE}.number ;;
 }
+
+dimension: product {}
 
 dimension: num_string {
   type: string

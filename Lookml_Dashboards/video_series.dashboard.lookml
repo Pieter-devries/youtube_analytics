@@ -489,25 +489,6 @@
     col: 8
     width: 16
     height: 6
-  - title: Sharing Breakdown
-    name: Sharing Breakdown
-    model: thesis_cool
-    explore: sharing
-    type: looker_line
-    fields: [channel_basic_a2_daily_first._data_date, sharing.sharingservice, sharing.count]
-    pivots: [sharing.sharingservice]
-    fill_fields: [channel_basic_a2_daily_first._data_date]
-    sorts: [sharing.sharingservice, channel_basic_a2_daily_first._data_date desc]
-    limit: 500
-
-    series_types: {}
-    listen:
-      Title: scrape_data.playlist_name
-      Anime Series: scrape_data.playlist_name
-    row: 20
-    col: 0
-    width: 8
-    height: 6
   filters:
   - name: Title
     title: Title

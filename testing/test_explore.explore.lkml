@@ -5,16 +5,23 @@ explore: created_dt {}
 
 explore: test_conditional_where {
   view_name: streamlined_data
-  conditionally_filter: {
-    filters: [streamlined_data.date_date: "2021-12-12"]
-    unless: [streamlined_data.date_month]
-  }
+  # conditionally_filter: {
+  #   filters: [streamlined_data.date_date: "2021-12-12"]
+  #   unless: [streamlined_data.date_month]
+  # }
 }
 
 explore: test_explore {
   # extension: required
   view_name: streamlined_data
-
+  access_filter: {
+    field: "streamlined_data.country_code"
+    user_attribute: "country"
+  }
+  access_filter: {
+    field: "streamlined_data.date_year"
+    user_attribute: "year"
+  }
   aggregate_table: new_name {
     query:  {
       dimensions: [streamlined_data.date_date]

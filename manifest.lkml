@@ -17,3 +17,26 @@ remote_dependency: test {
 constant: connection {
   value: "youtube_database"
 }
+
+constant: field_name {
+  value: "
+  {% if _user_attributes['role'] == 'admin' %}
+  country_code
+  {% elsif _user_attributes['role'] == 'user' %}
+  date_year
+  {% endif %}
+  "
+}
+
+constant: user_attribute {
+  value: "
+  {% if _user_attributes['role'] == 'admin' %}
+  country
+  {% elsif _user_attributes['role'] == 'user' %}
+  year
+  {% endif %}"
+}
+
+constant: negative_format {
+  value: "{% if value < 0 %}<p style='color:red;'>({{rendered_value}})</p>{% else %} {{rendered_value}} {% endif %}"
+}
