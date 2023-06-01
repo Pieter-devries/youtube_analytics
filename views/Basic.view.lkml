@@ -17,7 +17,7 @@ view: channel_basic_a2_daily_first {
   ;;
   }
 
-  drill_fields: [scrape_data.video_name,views]
+  # drill_fields: [scrape_data.video_name,views]
 
 #####
 #TEST
@@ -207,6 +207,14 @@ view: channel_basic_a2_daily_first {
   set: detail {
     fields: [scrape_data.playlist_name,genre_total.genre,views,comments]
     }
+
+  measure: views {
+    group_label: "Views"
+    label: "Total Views"
+    type: sum
+    sql: ${view_num} ;;
+    drill_fields: [detail*]
+  }
 # ------------
 #  DIMENSIONS
 # ------------
@@ -396,12 +404,7 @@ view: channel_basic_a2_daily_first {
     sql: ${TABLE}.views ;;
   }
 
-  measure: views {
-    group_label: "Views"
-    label: "Total Views"
-    type: sum
-    sql: ${view_num} ;;
-  }
+
 
   measure: zero_views {
     type: sum

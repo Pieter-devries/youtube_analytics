@@ -12,6 +12,32 @@ derived_table: {
   UNION ALL SELECT '20.50' as number, 'サプリメント' as product
   ;;
 }
+  dimension: test_row {
+    sql: ${TABLE}.number ;;
+    link: {
+      label: "マイページ"
+      url: "https://roomclip.jp/myroom/{{ value }}"
+    }
+    link: {
+      label: "{% if row['created_dt.product'] %} 風邪薬 {% endif %}"
+      url: "kaze"
+    }
+    link: {
+      label: "{% if row['created_dt.product'] %} 日用品 {% endif %}"
+      url: "nichi"
+    }
+    link: {
+      label: "{% if row['created_dt.product'] %} ペット用品 {% endif %}"
+      url: "pet"
+    }
+  }
+
+
+
+
+
+
+
 
 dimension: num {
   type: number
