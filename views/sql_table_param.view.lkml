@@ -1,6 +1,11 @@
 view: sql_table_param {
 sql_table_name: `boardgames.{% parameter platform_selector.param_platform %}` ;;
+dimension: id {
+    primary_key: yes
+    hidden: yes
+  }
 dimension: name {}
+dimension: url {}
 }
 
 
@@ -21,6 +26,25 @@ value: "ranking_2022"
 }
 }
 
-explore: sql_table_param {
+view: games_detailed {
+  sql_table_name: `boardgames.games_detailed` ;;
+  dimension: id {
+    primary_key: yes
+    hidden: yes
+  }
+  dimension: name {}
+  dimension: category {}
+}
+
+explore: base_table {
+  extension: required
 join: platform_selector {}
+}
+
+explore: sql_table_param {
+  extends: [base_table]
+  join: games_detailed {
+    sql_on: ${games_detailed.id} = ${sql_table_param.id} ;;
+    relationship: one_to_one
+  }
 }
