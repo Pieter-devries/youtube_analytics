@@ -32,8 +32,12 @@ view: games_detailed {
     primary_key: yes
     hidden: yes
   }
-  dimension: name {}
-  dimension: category {}
+  dimension: name {
+    suggest_persist_for: "1 second"
+  }
+  dimension: category {
+    suggest_persist_for: "1 second"
+  }
 }
 
 explore: base_table {
@@ -44,6 +48,7 @@ join: platform_selector {}
 explore: sql_table_param {
   extends: [base_table]
   join: games_detailed {
+    type: inner
     sql_on: ${games_detailed.id} = ${sql_table_param.id} ;;
     relationship: one_to_one
   }
