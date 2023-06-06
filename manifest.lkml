@@ -17,6 +17,9 @@ remote_dependency: test {
 constant: connection {
   value: "youtube_database"
 }
+constant: gcp_project_name {
+  value: "looker-dcl-data"
+}
 
 constant: field_name {
   value: "
