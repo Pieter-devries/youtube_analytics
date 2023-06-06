@@ -22,6 +22,7 @@ view: bob {
   }
 
   dimension: rank {
+    label: "rank"
     sql: ${TABLE}.rank ;;
   }
 
