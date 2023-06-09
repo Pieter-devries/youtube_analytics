@@ -22,6 +22,7 @@ view: bob {
   }
 
   dimension: rank {
+    label: "debug"
     sql: ${TABLE}.rank ;;
   }
 
