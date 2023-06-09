@@ -20,6 +20,12 @@ constant: connection {
 constant: gcp_project_name {
   value: "looker-dcl-data"
 }
+constant: bq_jp_dataset_name {
+  value: "boardgames"
+}
+constant: bq_tw_dataset_name {
+  value: "boardgames_copy"
+}
 
 constant: field_name {
   value: "
