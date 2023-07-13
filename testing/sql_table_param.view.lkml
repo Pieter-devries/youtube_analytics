@@ -1,4 +1,4 @@
-view: sql_table_param {
+view: dm_gachas {
 sql_table_name: `@{gcp_project_name}.{% parameter platform_selector.param_platform %}.ranking_2020` ;;
 extends: [dm_table_common]
 dimension: id {
@@ -9,22 +9,19 @@ dimension: name {}
 dimension: url {}
 }
 
-
-view: platform_selector {
-parameter: param_platform {
-label: "JP/TW切替"
-description: "jp/twのスキーマ切替"
-type: unquoted
-default_value: "boardgames"
-allowed_value: {
-label: "JP"
-value: "boardgames"
-}
-allowed_value: {
-label: "TW"
-value: "boardgames_copy"
-}
-}
+view: fc_purchase_gachas {
+  sql_table_name: `@{gcp_project_name}.{% parameter platform_selector.param_platform %}.games_detailed` ;;
+  extends: [fc_table_common]
+  dimension: id {
+    primary_key: yes
+    hidden: yes
+  }
+  dimension: name {
+    suggest_persist_for: "1 second"
+  }
+  dimension: category {
+    suggest_persist_for: "1 second"
+  }
 }
 
 # マスターデータ系テーブル、dateがないサマリーテーブルで利用する想定
@@ -60,18 +57,20 @@ view: fc_table_common {
   }
 }
 
-view: games_detailed {
-  sql_table_name: `@{gcp_project_name}.{% parameter platform_selector.param_platform %}.games_detailed` ;;
-  extends: [fc_table_common]
-  dimension: id {
-    primary_key: yes
-    hidden: yes
-  }
-  dimension: name {
-    suggest_persist_for: "1 second"
-  }
-  dimension: category {
-    suggest_persist_for: "1 second"
+view: platform_selector {
+  parameter: param_platform {
+    label: "JP/TW切替"
+    description: "jp/twのスキーマ切替"
+    type: unquoted
+    default_value: "@{bq_jp_dataset_name}"
+    allowed_value: {
+      label: "JP"
+      value: "@{bq_jp_dataset_name}"
+    }
+    allowed_value: {
+      label: "TW"
+      value: "@{bq_tw_dataset_name}"
+    }
   }
 }
 
@@ -80,11 +79,22 @@ explore: fc_base {
 join: platform_selector {}
 }
 
-explore: sql_table_param {
+explore: dm_gachas {
   extends: [fc_base]
-  join: games_detailed {
+  join: fc_purchase_gachas {
     type: inner
-    sql_on: ${games_detailed.id} = ${sql_table_param.id} ;;
+    sql_on: ${fc_purchase_gachas.id} = ${dm_gachas.id} ;;
+    relationship: one_to_one
+  }
+}
+
+explore: pieter_test {
+  view_name: fc_purchase_gachas
+  extends: [fc_base]
+
+  join: dm_gachas {
+    type: inner
+    sql_on: ${fc_purchase_gachas.id} = ${dm_gachas.id} ;;
     relationship: one_to_one
   }
 }
