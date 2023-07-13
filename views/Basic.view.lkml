@@ -3,7 +3,7 @@
 
 
 view: channel_basic_a2_daily_first {
-  view_label: "Basic"
+  view_label: "ベーシック"
   derived_table: {
     datagroup_trigger: youtube_transfer
     sql:
@@ -124,13 +124,13 @@ view: channel_basic_a2_daily_first {
 
 
   dimension: filter_start_date {
-    hidden: yes
+    # hidden: yes
     type: date
     datatype: date
     sql: {% date_start special_filter %};;
   }
   dimension: filter_end_date {
-    hidden: yes
+    # hidden: yes
     type: date
     datatype: date
     sql: {% date_end special_filter %};;
@@ -210,7 +210,7 @@ view: channel_basic_a2_daily_first {
 
   measure: views {
     group_label: "Views"
-    label: "Total Views"
+    label: "合計視聴数"
     type: sum
     sql: ${view_num} ;;
     drill_fields: [detail*]
@@ -234,6 +234,7 @@ view: channel_basic_a2_daily_first {
   dimension: country_code {
     group_label: "Demographics"
     description: "double digits"
+    label: "国コード"
     type: string
     sql: ${TABLE}.country_code ;;
   }
@@ -399,7 +400,8 @@ view: channel_basic_a2_daily_first {
   }
 
   dimension: view_num {
-    hidden: yes
+    label: "視聴数"
+    # hidden: yes
     type: number
     sql: ${TABLE}.views ;;
   }
@@ -495,7 +497,19 @@ view: channel_basic_a2_daily_first {
     group_label: "Video"
     type: number
     sql: ${views}/${count_videos} ;;
-    value_format: "#,##0"
+    value_format_name: decimal_0
+  }
+  measure: view_per_video1{
+    group_label: "Video"
+    type: number
+    sql: ${views}/${count_videos} ;;
+    value_format_name: decimal_1
+  }
+  measure: view_per_video2{
+    group_label: "Video"
+    type: number
+    sql: ${views}/${count_videos} ;;
+    value_format_name: decimal_2
   }
 
   measure: count {

@@ -1,4 +1,5 @@
 explore: streamlined_data {
+  label: "{% if _model.name == 'test' %} Bob {% else %} Jack {% endif %}"
   join: rank_views_by_data {
     sql_on: ${streamlined_data.subscribed_status} = ${rank_views_by_data.subscribed_status} ;;
     relationship: one_to_one
@@ -268,6 +269,15 @@ view: streamlined_data {
     datatype: datetime
     sql: ${TABLE}.date ;;
   }
+
+  dimension: yearmonth {
+    type: string
+    sql: CAST(${TABLE}.date AS STRING FORMAT 'YYYY/MM') ;;
+  }
+  dimension: fiscal_year {
+    type: string
+    sql: CAST(CASE WHEN EXTRACT(MONTH FROM ${TABLE}.date)<= 3 THEN EXTRACT(YEAR FROM ${TABLE}.date) -1 ELSE EXTRACT(YEAR FROM ${TABLE}.date) END AS STRING);;
+  }
 　
   dimension: week_start {
     type: string
@@ -337,6 +347,11 @@ view: streamlined_data {
     sql: ${TABLE}.views ;;
   }
 
+  dimension: all_views {
+    type: number
+    sql: (SELECT COUNT(views) FROM `looker-dcl-data.pieteryoutube.streamlined_data`) ;;
+  }
+
   dimension: watch_time_minutes {
     type: number
     sql: ${TABLE}.watch_time_minutes ;;
@@ -346,10 +361,8 @@ view: streamlined_data {
     type: count
     drill_fields: [video_name]
       html:
-       {% if subscribed_status._value == "not_subscribed" %}
+      {% if value < total_views._value  %}
          <p style="background-color: blue">{{ rendered_value }}</p>
-       {% elsif subscribed_status._value == "subscribed" %}
-         <p style="background-color: green">{{ rendered_value }}</p>
        {% else %}
          {{ rendered_value }}
        {% endif %};;
