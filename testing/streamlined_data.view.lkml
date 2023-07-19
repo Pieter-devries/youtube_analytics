@@ -9,10 +9,10 @@ explore: streamlined_data {
     relationship: many_to_one
   }
 
-  sql_always_where:
-  CASE
-    WHEN ${streamlined_data.week_start} IS NOT NULL
-    THEN ;;
+#   sql_always_where:
+#   CASE
+#     WHEN ${streamlined_data.week_start} IS NOT NULL
+#     THEN ;;
 }
 
 view: rank_views_by_data {
