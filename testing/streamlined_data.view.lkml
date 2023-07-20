@@ -9,10 +9,11 @@ explore: streamlined_data {
     relationship: many_to_one
   }
 
-#   sql_always_where:
-#   CASE
-#     WHEN ${streamlined_data.week_start} IS NOT NULL
-#     THEN ;;
+  # sql_always_where:
+  # CASE
+  #   WHEN ${streamlined_data.week_start} IS NOT NULL
+  #   THEN DATE(${week_days.day_choice}) BETWEEN DATE(${streamlined_data.week_start}) and DATE(${streamlined_data.week_start})
+  #   ELSE 1=1 END;;
 }
 
 view: rank_views_by_data {
@@ -47,10 +48,11 @@ view: week_days {
     sql:
       SELECT date
       FROM ${streamlined_data.SQL_TABLE_NAME} as streamlined_data
-      {% if streamlined_data.week_start._is_filtered %}
-        WHERE date BETWEEN {{ _filters['streamlined_data.week_start'] | sql_quote  }} AND
-              DATE_ADD(DATE({{ _filters['streamlined_data.week_start'] | sql_quote  }}), INTERVAL 7 DAY)
-      {% endif %} ;;
+      ;;
+      # {% if streamlined_data.week_start._is_filtered %}
+      #   WHERE date BETWEEN {{ _filters['streamlined_data.week_start'] | sql_quote  }} AND
+      #         DATE_ADD(DATE({{ _filters['streamlined_data.week_start'] | sql_quote  }}), INTERVAL 7 DAY)
+      # {% endif %}
 
     # date between DATE({{ streamlined_data.week_start._value }}) AND DATE_ADD(DATE({{ streamlined_data.week_start._value }}), INTERVAL 7 DAY);;
     #   explore_source: streamlined_data {
@@ -64,6 +66,10 @@ view: week_days {
     #   }
     #   filters: []
     #   }
+    }
+    dimension: day {
+      type: date_time
+      sql: ${TABLE}.date ;;
     }
     dimension: day_choice {
       type: string
