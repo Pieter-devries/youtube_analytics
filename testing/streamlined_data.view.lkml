@@ -401,7 +401,12 @@ view: week_days {
       type: number
       sql: ${TABLE}.views ;;
     }
+    dimension: break {
+      type: string
+      html: <div style="white-space:pre">{{ value }}</div> ;;
+      sql: concat(${views}, "\r\n" , ${video_id}) ;;
 
+    }
     dimension: all_views {
       type: number
       sql: (SELECT COUNT(views) FROM `looker-dcl-data.pieteryoutube.streamlined_data`) ;;
