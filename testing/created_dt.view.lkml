@@ -1,3 +1,14 @@
+explore: test_ref_dt {}
+
+view: test_ref_dt {
+  derived_table: {
+    sql:
+    SELECT case_test
+    FROM `${created_dt.SQL_TABLE_NAME}`;;
+  }
+dimension: case_test {}
+}
+
 view: created_dt {
 derived_table: {
   sql: SELECT '1127.920000' as number, '風邪薬' as product
@@ -32,7 +43,11 @@ derived_table: {
     }
   }
 
-
+  dimension: case_test {
+    sql:
+    CASE WHEN ${product} = '風邪薬' THEN 1
+    ELSE 2 END;;
+  }
 
 
 

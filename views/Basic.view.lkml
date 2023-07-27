@@ -205,7 +205,7 @@ view: channel_basic_a2_daily_first {
 
 
   set: detail {
-    fields: [scrape_data.playlist_name,genre_total.genre,views,comments]
+    fields: [scrape_data.playlist_name,views,comments]
     }
 
   measure: views {
