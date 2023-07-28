@@ -1,15 +1,26 @@
+explore: test_ref_dt {}
+
+view: test_ref_dt {
+  derived_table: {
+    sql:
+    SELECT case_test
+    FROM `${created_dt.SQL_TABLE_NAME}`;;
+  }
+dimension: case_test {}
+}
+
 view: created_dt {
 derived_table: {
-  sql: SELECT '1127.920000' as number, '風邪薬' as product
-  UNION ALL SELECT '1039.920000' as number, '衛生管理' as product
-  UNION ALL SELECT '366300.000000' as number, '日用品' as product
-  UNION ALL SELECT '7774.000000' as number, '冷凍食品' as product
-  UNION ALL SELECT '1.55000000' as number, 'ベビー' as product
-  UNION ALL SELECT '1.25' as number, 'ペット用品' as product
-  UNION ALL SELECT '1.0' as number, 'プロティン' as product
-  UNION ALL SELECT '1.05' as number, 'チョコレート' as product
-  UNION ALL SELECT '11.05' as number, 'ソフトドリンク' as product
-  UNION ALL SELECT '20.50' as number, 'サプリメント' as product
+  sql: SELECT '1127.920000' as number, '風邪薬(1)' as product
+  UNION ALL SELECT '1039.920000' as number, '衛生管理(2)' as product
+  UNION ALL SELECT '366300.000000' as number, '日用品(12)' as product
+  UNION ALL SELECT '7774.000000' as number, '冷凍食品(31)' as product
+  UNION ALL SELECT '1.55000000' as number, 'ベビー(4)' as product
+  UNION ALL SELECT '1.25' as number, 'ペット用品(5)' as product
+  UNION ALL SELECT '1.0' as number, 'プロティン(8)' as product
+  UNION ALL SELECT '1.05' as number, 'チョコレート(56)' as product
+  UNION ALL SELECT '11.05' as number, 'ソフトドリンク(102)' as product
+  UNION ALL SELECT '20.50' as number, 'サプリメント(9)' as product
   ;;
 }
   dimension: test_row {
@@ -32,12 +43,11 @@ derived_table: {
     }
   }
 
-
-
-
-
-
-
+  dimension: case_test {
+    sql:
+    CASE WHEN ${product} = '風邪薬' THEN 1
+    ELSE 2 END;;
+  }
 
 dimension: num {
   type: number
@@ -45,6 +55,11 @@ dimension: num {
 }
 
 dimension: product {}
+
+dimension: prod_num {
+  type: number
+  sql: REGEXP_EXTRACT(${product}, r'([.+])') ;;
+}
 
 dimension: num_string {
   type: string

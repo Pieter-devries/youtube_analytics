@@ -1,5 +1,6 @@
 view: dm_gachas {
-sql_table_name: `@{gcp_project_name}.{% parameter platform_selector.param_platform %}.ranking_2020` ;;
+  sql_table_name: `looker-dcl-data.boardgames.ranking_2020` ;;
+# sql_table_name: `@{gcp_project_name}.{% parameter platform_selector.param_platform %}.ranking_2020` ;;
 extends: [dm_table_common]
 dimension: id {
     primary_key: yes
@@ -34,27 +35,27 @@ view: dm_table_common {
 view: fc_table_common {
   extension: required
 
-  filter: date_filter {
-    label: "日付フィルター"
-    description: "日付のパーティション、集計時にフィルターを指定すること"
-    type: date
-    datatype: date
-    sql: {% condition date_filter %} ${partition_raw} {% endcondition %} ;;
-  }
+  # filter: date_filter {
+  #   label: "日付フィルター"
+  #   description: "日付のパーティション、集計時にフィルターを指定すること"
+  #   type: date
+  #   datatype: date
+  #   sql: {% condition date_filter %} ${partition_raw} {% endcondition %} ;;
+  # }
 
-  dimension_group: partition {
-    label: "日付"
-    type: time
-    datatype: date
-    timeframes: [raw,date,week,month,year,day_of_month,day_of_week,day_of_year,month_num,fiscal_month_num,fiscal_quarter,fiscal_quarter_of_year,fiscal_year]
-    sql: ${TABLE}.date ;;
-  }
+  # dimension_group: partition {
+  #   label: "日付"
+  #   type: time
+  #   datatype: date
+  #   timeframes: [raw,date,week,month,year,day_of_month,day_of_week,day_of_year,month_num,fiscal_month_num,fiscal_quarter,fiscal_quarter_of_year,fiscal_year]
+  #   sql: ${TABLE}.date ;;
+  # }
 
-  dimension: user_id {
-    label: "ユーザーID"
-    type: number
-    sql: ${TABLE}.user_id ;;
-  }
+  # dimension: user_id {
+  #   label: "ユーザーID"
+  #   type: number
+  #   sql: ${TABLE}.user_id ;;
+  # }
 }
 
 view: platform_selector {
@@ -76,6 +77,10 @@ view: platform_selector {
 
 explore: fc_base {
   extension: required
+  # conditionally_filter: {
+  #   filters: [date_filter: "30 days ago for 30 days"]
+  #   unless: [partition_date, partition_month, partition_year]
+  # }
 join: platform_selector {}
 }
 

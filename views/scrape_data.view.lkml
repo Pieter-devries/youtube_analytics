@@ -22,6 +22,7 @@ view: scrape_data {
   }
 
   dimension: episode_number {
+    drill_fields: [video_name]
     view_label: "Basic"
     group_label: "Video Info"
     type: number
