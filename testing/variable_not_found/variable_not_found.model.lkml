@@ -9,8 +9,16 @@ view: orders {
   }
 }
 
-view: users {
-  sql_table_name: `@{gcp_project_name}.{% parameter param_selector.test_parameter %}.users` ;;
+view: users_not_working {
+  sql_table_name: `looker-dcl-data.{% parameter param_selector.test_parameter %}.users` ;;
+  dimension: id {}
+  dimension: gender {
+    suggest_persist_for: "1 second"
+  }
+}
+
+view: users_working {
+  sql_table_name: `looker-dcl-data.orders.users` ;;
   dimension: id {}
   dimension: gender {
     suggest_persist_for: "1 second"
@@ -18,13 +26,27 @@ view: users {
 }
 
 explore: orders {
+  # sql_always_where: "{% parameter param_selector.test_parameter %}" = "orders";;
   join: param_selector {}
-  join: users {
+  join: users_not_working {
     relationship: many_to_one
-    sql_on: ${orders.user_id} = ${users.id} ;;
+    sql_on: ${orders.user_id} = ${users_not_working.id} ;;
+  }
+  join: users_working {
+    relationship: many_to_one
+    sql_on: ${orders.user_id} = ${users_working.id} ;;
   }
 }
 
 view: param_selector {
-  parameter: test_parameter { type: unquoted }
+  parameter: test_parameter {
+    type: unquoted
+    default_value: "orders"
+    allowed_value: {
+      value: "orders"
+    }
+    allowed_value: {
+      value: "bob"
+    }
+    }
 }
