@@ -49,3 +49,17 @@ constant: user_attribute {
 constant: negative_format {
   value: "{% if value < 0 %}<p style='color:red;'>({{rendered_value}})</p>{% else %} {{rendered_value}} {% endif %}"
 }
+
+constant: timesframes {
+  value: "        raw,
+        time,
+        date,
+        week,
+        month,
+        month_name,
+        quarter,
+        year,
+        month_num,
+        fiscal_month_num,
+        fiscal_year"
+}

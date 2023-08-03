@@ -34,6 +34,34 @@ explore: test_explore {
   # persist_with: test_dg
 }
 
+explore: users {
+  # from: users
+  join: bob {
+    from: users2
+    sql_on: ${users.city} = ${bob.city} ;;
+    type: left_outer
+    relationship: many_to_one
+  }
+  join: users2 {
+    sql_on: ${users.city} = ${users2.city} ;;
+    type: left_outer
+    relationship: many_to_one
+  }
+}
+
+# explore: join_test {
+#   # hidden: yes
+#   from: streamlined_data
+#   join: bob {
+#     from: users
+#     type: left_outer
+#     sql_on: ${join_test.country_code} = ${bob.city} ;;
+#   }
+#   join: created_dt {
+#     type: left_outer
+#     sql_on: ${bob} = ${created_dt.case_test} ;;
+#   }
+# }
 
 explore: test_sql_where {
   extends: [test_explore]

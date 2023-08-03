@@ -1,7 +1,8 @@
 connection: "looker-dcl-data"
 
 view: orders {
-  sql_table_name: `looker-dcl-data.orders.orders` ;;
+  sql_table_name: `looker-dcl-data.orders.orders` ;;　#NOT WORKING
+  # sql_table_name: `looker-dcl-data.{% parameter param_selector.test_parameter %}.orders` ;;　#WORKING
   dimension: id {}
   dimension: user_id {}
   dimension: status {
