@@ -325,6 +325,15 @@ view: week_days {
       sql: ${TABLE}.date ;;
     }
 
+    # dimension_group: constant_date {
+    #   type: time
+    #   timeframes: [
+    #   "@{timesframes}"
+    #   ]
+    #   datatype: datetime
+    #   sql: ${TABLE}.date ;;
+    # }
+
     dimension: yearmonth {
       type: string
       sql: CAST(${TABLE}.date AS STRING FORMAT 'YYYY/MM') ;;
@@ -432,6 +441,13 @@ view: week_days {
     measure: total_views {
       type: sum
       sql: ${views} ;;
+      description: "the total views"
+      html:
+      {% if date_month._value == "2022-05" %}
+      実績悪い→理由 {{value}}
+      {% else %}
+      {{value}}
+      {% endif %};;
       # html:
       # <ul>
       # <li> value: {{ value }} </li>
