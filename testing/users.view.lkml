@@ -108,7 +108,7 @@ view: users2 {
   }
 
   measure: distinct_count_test {
-    type: sum_distinct
+    type: count
     sql_distinct_key: concat(${bob.pk},${city}) ;;
     sql: ${users2.pk} ;;
   }

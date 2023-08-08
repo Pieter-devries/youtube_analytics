@@ -34,16 +34,17 @@ explore: test_explore {
   # persist_with: test_dg
 }
 
-explore: users {
+explore: test_users {
+  from:  users2
   # from: users
   join: bob {
     from: users2
-    sql_on: ${users.city} = ${bob.city} ;;
+    sql_on: ${test_users.city} = ${bob.city} ;;
     type: left_outer
     relationship: many_to_one
   }
   join: users2 {
-    sql_on: ${users.city} = ${users2.city} ;;
+    sql_on: ${test_users.city} = ${users2.city} ;;
     type: left_outer
     relationship: many_to_one
   }
