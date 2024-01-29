@@ -35,7 +35,9 @@ view: scrape_data {
   }
 
   dimension: playlist_name {
-    drill_fields: [episode_number,basic.views]
+    # description: "{{rendered_value}}"
+    html: <a title={{ scrape_data.playlist_name._rendered_value }}> {{ scrape_data.playlist_name._rendered_value }} </a> ;;
+    # drill_fields: [episode_number,basic.views]
     view_label: "Basic"
     group_label: "Video Info"
     sql:
@@ -54,4 +56,23 @@ view: scrape_data {
         ;;
   }
 
+  dimension: colored_playlist {
+    type: number
+    sql:
+    CASE
+      WHEN ${playlist_name} = "魔女の旅々" THEN 1
+      WHEN ${playlist_name} = "鬼滅の刃" THEN 2
+      WHEN ${playlist_name} = "銀河英雄伝説" THEN 3
+    END
+    ;;
+    html:
+    {% if value == 1 %}
+    魔女の旅々
+    {% elsif value == 2 %}
+    鬼滅の刃
+    {% elsif value == 3 %}
+    銀河英雄伝説
+    {% endif %}
+    ;;
+  }
 }

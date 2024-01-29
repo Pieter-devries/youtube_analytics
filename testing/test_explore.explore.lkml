@@ -34,6 +34,8 @@ explore: test_explore {
   # persist_with: test_dg
 }
 
+explore: users {}
+
 explore: test_users {
   from:  users2
   # from: users

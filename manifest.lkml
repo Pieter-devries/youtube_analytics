@@ -14,6 +14,10 @@ remote_dependency: test {
   ref: "master"
 }
 
+constant: suggestion {
+  value: "suggestions: yes"
+}
+
 constant: connection {
   value: "youtube_database"
 }

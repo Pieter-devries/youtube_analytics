@@ -1,4 +1,10 @@
 explore: streamlined_data {
+  # always_filter: {
+  #   filters: [streamlined_data.target_date: "today"]
+  # }
+  # conditionally_filter: {
+  #   filters: [streamlined_data.target_date: "yesterday"]
+  # }
   # label: "{% if _model.name == 'test' %} Bob {% else %} Jack {% endif %}"
   join: rank_views_by_data {
     sql_on: ${streamlined_data.subscribed_status} = ${rank_views_by_data.subscribed_status} ;;
@@ -23,10 +29,15 @@ view: rank_views_by_data {
     subscribed_status,
     RANK() OVER (ORDER BY COALESCE(SUM(views), 0) DESC) AS rank
     FROM `looker-dcl-data.pieteryoutube.streamlined_data`
-    WHERE EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM CURRENT_DATE())
+    WHERE EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM ({% parameter date_param%}))
     GROUP BY 1
     ;;
 
+  }
+
+  parameter: date_param {
+    type: date
+    default_value: "2023/01/01"
   }
 
 # dimension_group: date {
@@ -306,6 +317,12 @@ view: week_days {
       sql: ${TABLE}.country_code ;;
     }
 
+    # parameter: target_date {
+    filter: target_date {
+      type: date
+      # default_value: "yesterday"
+    }
+
     dimension_group: date {
       type: time
       timeframes: [
@@ -313,16 +330,29 @@ view: week_days {
         time,
         date,
         week,
+        week_of_year,
         month,
         month_name,
+        month_num,
         quarter,
         year,
-        month_num,
         fiscal_month_num,
         fiscal_year
       ]
       datatype: datetime
       sql: ${TABLE}.date ;;
+    }
+
+  dimension: week_of_month {
+    group_label: "Date Date"
+    type: string
+    sql: CONCAT("第",MOD(${date_week_of_year},${date_month_num})+1,"週");;
+  }
+
+    dimension: mon {
+      group_label: "Date Date"
+      type: string
+      sql: FORMAT_DATE("%b/%d", DATE_TRUNC(${date_raw},DAY)) ;;
     }
 
     # dimension_group: constant_date {

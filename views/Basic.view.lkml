@@ -1,9 +1,31 @@
 # I have deleted annotation related data, because annotations are annoying and I don't use them!
 # I have deleted avg/perc type data that is aggregated in the YT database, because they come as dimensions, I recreate the needed ones as measures
 
+view: monthly_views {
+  derived_table: {
+    sql:
+    SELECT
+    (FORMAT_DATE('%Y-%m', PARSE_DATE("%Y%m%d",channel_basic_a2_daily_first.date) )) AS month,
+    RANK() OVER (PARTITION BY 1 ORDER BY SUM(views)) as rank
+    FROM channel_basic_a2_daily_first
+    GROUP BY 1
+    ;;
+  }
+  dimension: month {
+    type: string
+    primary_key: yes
+    sql: case when rank = 1 then month else null end ;;
+  }
+  dimension: rank {}
+
+
+  # dimension: url_link {
+  #   sql: CASE WHEN rank = 1 THEN month ELSE NULL END ;;
+  # }
+}
 
 view: channel_basic_a2_daily_first {
-  view_label: "ベーシック"
+  view_label: "Basic"
   derived_table: {
     datagroup_trigger: youtube_transfer
     sql:
@@ -28,6 +50,15 @@ view: channel_basic_a2_daily_first {
   #   sql: {{_filters['scrape_data.episode_number']}} ;;
   # }
 
+
+dimension: link_test {
+  sql: ${scrape_data.video_name} ;;
+  order_by_field: scrape_data.playlist_name
+  link: {
+    label: "test"
+    url: "dashboards/80?filter1={{value}}&filter2={{_data_date._value}}"
+  }
+}
 
 
 ####
@@ -105,6 +136,38 @@ view: channel_basic_a2_daily_first {
     convert_tz: no
     datatype: date
     sql: PARSE_DATE("%Y%m%d",${TABLE}.date) ;;
+  }
+
+  dimension: week_of_month {
+    group_label: "Date"
+    type: string
+    sql:
+    CONCAT("第",
+                (CASE WHEN MOD(${_data_week_of_year}+1,${_data_month_num})+1 > 5 THEN 1
+                ELSE MOD(${_data_week_of_year}+1,${_data_month_num})+1 END)
+          ,"週");;
+  }
+
+  dimension: is_weekday {
+    hidden: yes
+    type: yesno
+    sql: ${_data_day_of_week} IN ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday') ;;
+  }
+  measure: weekday_count {
+    hidden: yes
+    type: count_distinct
+    sql: ${_data_date} ;;
+    filters: [is_weekday: "yes"]
+  }
+  measure: weekday_views {
+    hidden: yes
+    type: sum
+    sql: ${view_num} ;;
+    filters: [is_weekday: "yes"]
+  }
+  measure: average_weekday_views {
+    type: number
+    sql: SAFE_DIVIDE(${weekday_views},${weekday_count}) ;;
   }
 
   filter: special_filter {
@@ -213,13 +276,51 @@ view: channel_basic_a2_daily_first {
     label: "合計視聴数"
     type: sum
     sql: ${view_num} ;;
+    # drill_fields: [detail*]
+    link: {
+      label: "Video Info"
+      url: "{{drill_fields._link}}"
+    }
+    link: {
+      label: "to a dashboard"
+      url: "{{monthly_views.month._value}}"
+    }
+  }
+
+  measure: drill_fields {
+    hidden: yes
+    type: sum
+    sql: 0 ;;
     drill_fields: [detail*]
   }
+
+  # measure: min_views {
+  #   type: number
+  #   sql: (SELECT min(views) FROM channel_basic_a2_daily_first WHERE {% condition _data_month %} PARSE_DATE("%Y%m%d",date) {% endcondition %})  ;;
+  # }
+
+  # measure: min_view_month {
+  #   type: string
+  #   sql: CASE WHEN ${views} = ${min_views} THEN min(${_data_month}) ELSE NULL END
+  #   ;;
+  # }
+
+  # added by linna
+  measure: linna_min_views {
+    type: date
+    sql: MIN(${views}) ;;
+    link: {
+      label: "to a dashboard"
+      url: "{{monthly_views.month._value}}"
+    }
+  }
+
 # ------------
 #  DIMENSIONS
 # ------------
 
   dimension: video_id {
+    html: <a title={{ video_id._rendered_value }}{{ channel_id._rendered_value }}> {{ video_id._rendered_value }} </a> ;;
     group_label: "Video Info"
     type: string
     sql: ${TABLE}.video_id ;;
@@ -531,6 +632,10 @@ view: channel_basic_a2_daily_first {
               ELSE null END;;
     label: "Test"
 #    value_format: "# ##0"
+    link: {
+      label: "test"
+      url: "dashboards/80?filter1={{value}}&filter2={{_data_date._value}}"
+    }
   }
 
   measure: key_points {
@@ -609,6 +714,20 @@ measure: combo_metric {
         THEN ${key_points}
       ELSE NULL
     END ;;
+  }
+
+  measure: dynamic_measure2 {
+    # label: "{{ metric_chooser._parameter_value }}"
+    # label: "{{ _filters['channel_basic_a2_daily_first.metric_chooser'] }}"
+    label:
+    "{%  if _filters['channel_basic_a2_daily_first.metric_chooser'] == 'views' %}
+    Total Views
+    {%  elsif _filters['channel_basic_a2_daily_first.metric_chooser'] == 'avg_watch_time' %}
+    Average Watch Time
+    {%  else %} SOMETHING ELSE
+    {%  endif%}
+    "
+    sql: ${dynamic_measure} ;;
   }
 
   measure: test_views {
