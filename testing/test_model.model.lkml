@@ -21,17 +21,14 @@ map_layer: countrie {
   property_key: "ADMIN"
   property_label_key: "Location"
 }
-# # Select the views that should be a part of this model,
-# # and define the joins that connect them together.
-#
-# explore: order_items {
-#   join: orders {
-#     relationship: many_to_one
-#     sql_on: ${orders.id} = ${order_items.order_id} ;;
-#   }
-#
-#   join: users {
-#     relationship: many_to_one
-#     sql_on: ${users.id} = ${orders.user_id} ;;
-#   }
-# }
+
+explore: sub_total_transaction {
+  label: "sub_total"
+
+  join: sub_total_master {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${sub_total_master.nm3} = ${sub_total_transaction.nm3_trans} ;;
+  }
+
+}

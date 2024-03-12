@@ -152,6 +152,12 @@ view: week_days {
       sql: "line1: value\nLine2: value" ;;
     }
 
+  # dimension: date_filter {
+  #   sql:
+  #   {% assign filter = _filters['date_date'] | sql_quote %}
+  #   filter ;;
+  # }
+
     dimension: html_br_withoutliquid_test {
       description: "control and treatment"
       sql: REPLACE(${new_line_sql}, "\n", ",") ;;
@@ -436,6 +442,16 @@ view: week_days {
       sql: ${TABLE}.video_name ;;
     }
 
+    dimension: test_name {
+      type: string
+      sql:
+      {% if video_name._value == "【海外の反応 アニメ】 Fate/Zero 11話 フェイトゼロ 11 アニメリアクション" %}
+      ${video_name}
+      {% else %}
+      null;;
+
+    }
+
     dimension: views {
       type: number
       sql: ${TABLE}.views ;;
@@ -461,10 +477,10 @@ view: week_days {
       drill_fields: [video_name]
       html:
       {% if value < total_views._value  %}
-         <p style="background-color: blue">{{ rendered_value }}</p>
-       {% else %}
-         {{ rendered_value }}
-       {% endif %};;
+        <p style="background-color: blue">{{ rendered_value }}</p>
+      {% else %}
+        {{ rendered_value }}
+      {% endif %};;
 
     }
 
@@ -533,6 +549,9 @@ view: week_days {
             2
             {% endif %};;
     }
+
+
+
 
 ## dashboard_url
 
