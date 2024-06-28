@@ -51,14 +51,24 @@ view: channel_basic_a2_daily_first {
   # }
 
 
-dimension: link_test {
-  sql: ${scrape_data.video_name} ;;
-  order_by_field: scrape_data.playlist_name
-  link: {
-    label: "test"
-    url: "dashboards/80?filter1={{value}}&filter2={{_data_date._value}}"
+# dimension: link_test {
+#   sql: ${scrape_data.video_name} ;;
+#   order_by_field: scrape_data.playlist_name
+#   link: {
+#     label: "test"
+#     url: "dashboards/80?filter1={{value}}&filter2={{_data_date._value}}"
+#   }
+# }
+
+### TEST
+
+  dimension: genre_filter {
+    type: string
+    suggest_explore: channel_basic_a2_daily_first
+    suggest_dimension: channel_basic_a2_daily_first.genre
   }
-}
+
+### TEST
 
 
 ####

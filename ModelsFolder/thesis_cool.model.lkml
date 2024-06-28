@@ -24,6 +24,15 @@ named_value_format: number_conditional {
   value_format: "[>=1000000]\"¥\"0.0,,\"M\";[>=1000]\"¥\"0.0,\"K\";\"¥\"0"
 }
 
+explore: test_suggest_explore {
+  view_name: channel_basic_a2_daily_first
+  join: genre_total {
+    type: left_outer
+    sql_on: ${genre_total.video_id} = ${channel_basic_a2_daily_first.video_id} ;;
+    relationship: many_to_many
+  }
+}
+
 
 explore: series_analysis {
   from: channel_basic_a2_daily_first
