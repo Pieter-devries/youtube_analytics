@@ -117,9 +117,9 @@ view: users2 {
     html: <img src="https://www.looker.com/static/assets/looker-logo.svg"/> ;;
   }
 
-  measure: distinct_count_test {
-    type: count
-    # sql_distinct_key: concat(${bob.pk},${city}) ;;
-    sql: ${users2.pk} ;;
-  }
+  # measure: distinct_count_test {
+  #   type: count
+  #   # sql_distinct_key: concat(${bob.pk},${city}) ;;
+  #   sql: ${users2.pk} ;;
+  # }
 }

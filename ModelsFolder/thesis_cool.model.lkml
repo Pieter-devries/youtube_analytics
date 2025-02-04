@@ -59,6 +59,7 @@ explore: series_analysis {
 }
 
 explore: channel_basic_a2_daily_first {
+  # persist_for: "10 seconds"
   # sql_always_where: ${_data_date} != CURRENT_DATE('Japan') ;;
   query: subscriber_views {
     dimensions: [channel_basic_a2_daily_first.subscribed_status]
@@ -85,7 +86,7 @@ explore: channel_basic_a2_daily_first {
       materialization: {datagroup_trigger:youtube_transfer}
       }
   join: scrape_data {
-    fields: [scrape_data.video_name,scrape_data.playlist_name, scrape_data.episode_number, scrape_data.colored_playlist]
+    # fields: [scrape_data.video_name,scrape_data.playlist_name, scrape_data.episode_number, scrape_data.colored_playlist]
     type: left_outer
     sql_on: ${scrape_data.video_id} = ${channel_basic_a2_daily_first.video_id} ;;
     relationship: many_to_one
@@ -121,6 +122,7 @@ explore: channel_basic_a2_daily_first {
     }
   join: monthly_views {
     type: cross
+    relationship: many_to_one
     # sql_on: ${channel_basic_a2_daily_first._data_month} = ${monthly_views.month} ;;
   }
 }

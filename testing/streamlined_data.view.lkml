@@ -92,6 +92,15 @@ view: week_days {
   view: streamlined_data {
     sql_table_name: `looker-dcl-data.pieteryoutube.streamlined_data` ;;
 
+### URL TEST
+
+    dimension: test_url {
+      sql: CONCAT("https://switchback.cloud.looker.com/dashboards/80?Week%20Start=",${week_start}) ;;
+    }
+
+
+### URL TEST
+
 
 ### DATE FILTER
     dimension: week_start {
@@ -448,7 +457,8 @@ view: week_days {
       {% if video_name._value == "【海外の反応 アニメ】 Fate/Zero 11話 フェイトゼロ 11 アニメリアクション" %}
       ${video_name}
       {% else %}
-      null;;
+      null
+      {% endif %};;
 
     }
 

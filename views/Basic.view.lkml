@@ -45,7 +45,6 @@ view: channel_basic_a2_daily_first {
 #TEST
 #####
 
-
   # dimension: get_filters {
   #   sql: {{_filters['scrape_data.episode_number']}} ;;
   # }
@@ -287,14 +286,14 @@ view: channel_basic_a2_daily_first {
     type: sum
     sql: ${view_num} ;;
     # drill_fields: [detail*]
-    link: {
-      label: "Video Info"
-      url: "{{drill_fields._link}}"
-    }
-    link: {
-      label: "to a dashboard"
-      url: "{{monthly_views.month._value}}"
-    }
+    # link: {
+    #   label: "Video Info"
+    #   url: "{{drill_fields._link}}"
+    # }
+    # link: {
+    #   label: "to a dashboard"
+    #   url: "{{monthly_views.month._value}}"
+    # }
   }
 
   measure: drill_fields {
@@ -726,19 +725,19 @@ measure: combo_metric {
     END ;;
   }
 
-  measure: dynamic_measure2 {
-    # label: "{{ metric_chooser._parameter_value }}"
-    # label: "{{ _filters['channel_basic_a2_daily_first.metric_chooser'] }}"
-    label:
-    "{%  if _filters['channel_basic_a2_daily_first.metric_chooser'] == 'views' %}
-    Total Views
-    {%  elsif _filters['channel_basic_a2_daily_first.metric_chooser'] == 'avg_watch_time' %}
-    Average Watch Time
-    {%  else %} SOMETHING ELSE
-    {%  endif%}
-    "
-    sql: ${dynamic_measure} ;;
-  }
+  # measure: dynamic_measure2 {
+  #   # label: "{{ metric_chooser._parameter_value }}"
+  #   # label: "{{ _filters['channel_basic_a2_daily_first.metric_chooser'] }}"
+  #   label:
+  #   "{%  if _filters['channel_basic_a2_daily_first.metric_chooser'] == 'views' %}
+  #   Total Views
+  #   {%  elsif _filters['channel_basic_a2_daily_first.metric_chooser'] == 'avg_watch_time' %}
+  #   Average Watch Time
+  #   {%  else %} SOMETHING ELSE
+  #   {%  endif%}
+  #   "
+  #   sql: ${dynamic_measure} ;;
+  # }
 
   measure: test_views {
     type: average
