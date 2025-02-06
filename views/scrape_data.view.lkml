@@ -21,18 +21,18 @@ view: scrape_data {
     sql: ${TABLE}.video_name ;;
   }
 
-  dimension: episode_number {
-    drill_fields: [video_name]
-    view_label: "Basic"
-    group_label: "Video Info"
-    type: number
-    sql:
-    CASE
-      WHEN SUBSTR(${video_name},STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"([0-9]話)")),0) IS NOT NULL
-        THEN CAST(TRIM(REGEXP_REPLACE(SUBSTR(${video_name},STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"( [0-9])")),4),r"\D+","")) as NUMERIC)
-      ELSE null
-    END;;
-  }
+  # dimension: episode_number {
+  #   drill_fields: [video_name]
+  #   view_label: "Basic"
+  #   group_label: "Video Info"
+  #   type: number
+  #   sql:
+  #   CASE
+  #     WHEN SUBSTR(${video_name},STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"([0-9]話)")),0) IS NOT NULL
+  #       THEN CAST(TRIM(REGEXP_REPLACE(SUBSTR(${video_name},STRPOS(${video_name},REGEXP_EXTRACT(${video_name},r"( [0-9])")),4),r"\D+","")) as NUMERIC)
+  #     ELSE null
+  #   END;;
+  # }
 
   dimension: playlist_name {
     # description: "{{rendered_value}}"

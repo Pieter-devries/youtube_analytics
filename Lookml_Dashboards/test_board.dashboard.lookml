@@ -78,19 +78,19 @@
     width: 3
     height: 1
   filters:
-  - name: Episode Number
-    title: Episode Number
-    type: field_filter
-    default_value: NOT NULL
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: range_slider
-      display: inline
-    model: thesis_cool
-    explore: channel_basic_a2_daily_first
-    listens_to_filters: []
-    field: scrape_data.episode_number
+  # - name: Episode Number
+  #   title: Episode Number
+  #   type: field_filter
+  #   default_value: NOT NULL
+  #   allow_multiple_values: true
+  #   required: false
+  #   ui_config:
+  #     type: range_slider
+  #     display: inline
+  #   model: thesis_cool
+  #   explore: channel_basic_a2_daily_first
+  #   listens_to_filters: []
+  #   field: scrape_data.episode_number
   - name: " Data Date"
     title: " Data Date"
     type: field_filter
