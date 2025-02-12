@@ -98,11 +98,18 @@ view: week_days {
       sql: CONCAT("https://switchback.cloud.looker.com/dashboards/80?Week%20Start=",${week_start}) ;;
     }
 
+    dimension: date_url {
+      sql: CONCAT("https://switchback.cloud.looker.com/dashboards/80?Date+Date=",DATE({% date_start date_filter %}),"+To+", DATE({% date_end date_filter %})) ;;
+    }
 
 ### URL TEST
 
 
 ### DATE FILTER
+
+  filter: date_filter {
+    type: date
+  }
     dimension: week_start {
       suggest_persist_for: "5 seconds"
       type: string
