@@ -102,6 +102,24 @@ view: week_days {
       sql: CONCAT("https://switchback.cloud.looker.com/dashboards/80?Date+Date=",DATE({% date_start date_filter %}),"+To+", DATE({% date_end date_filter %})) ;;
     }
 
+    parameter: looker_studio_report {
+      allowed_value: {
+        label: "report1"
+        value: "0e09ae6d-d93e-416c-b1b5-aa6a6b37d9ea"
+      }
+      allowed_value: {
+        label: "report2"
+        value: "43564d86-6fff-424b-843c-31c8c8c84f34"
+      }
+    }
+    dimension: looker_studio_url {
+      sql: CONCAT("https://lookerstudio.google.com/c/u/0/reporting/",{{ looker_studio_report._parameter_value }}) ;;
+      link: {
+        label: "Open Report"
+        url: "{{value}}"
+        }
+    }
+
 ### URL TEST
 
 
@@ -361,7 +379,7 @@ view: week_days {
         fiscal_month_num,
         fiscal_year
       ]
-      datatype: datetime
+      datatype: date
       sql: ${TABLE}.date ;;
     }
 
@@ -458,6 +476,11 @@ view: week_days {
       sql: ${TABLE}.video_name ;;
     }
 
+    dimension: playlist_name {
+      type: string
+      sql: ${TABLE}.playlist_name ;;
+    }
+
     dimension: test_name {
       type: string
       sql:
@@ -505,24 +528,7 @@ view: week_days {
       type: sum
       sql: ${views} ;;
       description: "the total views"
-      html:
-      {% if date_month._value == "2022-05" %}
-      実績悪い→理由 {{value}}
-      {% else %}
-      {{value}}
-      {% endif %};;
-      # html:
-      # <ul>
-      # <li> value: {{ value }} </li>
-      # <li> count: {{ count._value }} </li>
-      # </ul>
-      # ;;
-      # link: {
-      #   label: "xxx"
-      #   url: "https://www.google.com"
-      # }
-
-      # html: <a href="https://www.google.com">{{value}}</a> ;;
+      drill_fields: [date_date, playlist_name,video_name,total_views]
     }
 
     measure: html_measure {

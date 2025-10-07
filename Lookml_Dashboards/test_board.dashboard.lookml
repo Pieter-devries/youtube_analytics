@@ -5,26 +5,6 @@
   description: ''
   preferred_slug: qS1gbhvZ1b8t6vAu95lZyj
   elements:
-  - title: Best Episode
-    name: Best Episode
-    model: thesis_cool
-    explore: channel_basic_a2_daily_first
-    type: looker_single_record
-    fields: [channel_basic_a2_daily_first._data_date, scrape_data.playlist_name, scrape_data.episode_number,
-      channel_basic_a2_daily_first.views]
-    filters: {}
-    sorts: [channel_basic_a2_daily_first.views desc]
-    limit: 500
-    show_view_names: false
-    series_types: {}
-    defaults_version: 1
-    listen:
-      Episode Number: scrape_data.episode_number
-      " Data Date": channel_basic_a2_daily_first._data_date
-    row: 1
-    col: 0
-    width: 5
-    height: 5
   - name: traffic_views
     title: traffic_views
     model: thesis_cool
@@ -78,25 +58,12 @@
     width: 3
     height: 1
   filters:
-  # - name: Episode Number
-  #   title: Episode Number
-  #   type: field_filter
-  #   default_value: NOT NULL
-  #   allow_multiple_values: true
-  #   required: false
-  #   ui_config:
-  #     type: range_slider
-  #     display: inline
-  #   model: thesis_cool
-  #   explore: channel_basic_a2_daily_first
-  #   listens_to_filters: []
-  #   field: scrape_data.episode_number
   - name: " Data Date"
     title: " Data Date"
     type: field_filter
     default_value: NOT NULL
     allow_multiple_values: true
-    required: false
+    required: true
     ui_config:
       type: advanced
       display: popover
