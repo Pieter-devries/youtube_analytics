@@ -21,6 +21,7 @@ derived_table: {
   UNION ALL SELECT '1.05' as number, 'チョコレート(56)' as product
   UNION ALL SELECT '11.05' as number, 'ソフトドリンク(102)' as product
   UNION ALL SELECT '20.50' as number, 'サプリメント(9)' as product
+  UNION ALL SELECT '99999999999999900.123' as number, 'xxx' as product
   ;;
 }
   dimension: test_row {
