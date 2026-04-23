@@ -40,7 +40,9 @@ view: atc_detailed_summary {
     explore_source: daily_calendar {
       column: number { field: daily_calendar.number }
       column: product { field: daily_calendar.product }
+
     }
+    persist_for: "24 hours"
   }
 
   dimension: number { type: string }
