@@ -1,7 +1,15 @@
-explore: atc_detailed_summary {
-  # This explore will be used to trigger the manual rebuild
+explore: daily_calendar {
+  aggregate_table: atc_detailed_summary {
+    materialization: {
+      persist_for: "24 hours"
+    }
+    query: {
+      dimensions: [number, product]
+      measures: [count] # Assumes you have a count measure defined
+    }
+  }
 }
-explore: daily_calendar {}
+
 view: daily_calendar {
   derived_table: {
     sql:
@@ -32,6 +40,7 @@ view: daily_calendar {
   dimension: number { type: string }
   dimension: product { type: string }
   dimension: built_at { type: string }
+  measure: count {type: count}
 }
 
 view: atc_detailed_summary {
@@ -40,11 +49,12 @@ view: atc_detailed_summary {
     explore_source: daily_calendar {
       column: number { field: daily_calendar.number }
       column: product { field: daily_calendar.product }
-
+      column: count { field: count}
     }
     persist_for: "24 hours"
   }
 
   dimension: number { type: string }
   dimension: product { type: string }
+  measure: count {}
 }
