@@ -11,17 +11,17 @@ dimension: case_test {}
 
 view: created_dt {
 derived_table: {
-  sql: SELECT '1127.920000' as number, '風邪薬(1)' as product
-  UNION ALL SELECT '1039.920000' as number, '衛生管理(2)' as product
-  UNION ALL SELECT '366300.000000' as number, '日用品(12)' as product
-  UNION ALL SELECT '7774.000000' as number, '冷凍食品(31)' as product
-  UNION ALL SELECT '1.55000000' as number, 'ベビー(4)' as product
-  UNION ALL SELECT '1.25' as number, 'ペット用品(5)' as product
-  UNION ALL SELECT '1.0' as number, 'プロティン(8)' as product
-  UNION ALL SELECT '1.05' as number, 'チョコレート(56)' as product
-  UNION ALL SELECT '11.05' as number, 'ソフトドリンク(102)' as product
-  UNION ALL SELECT '20.50' as number, 'サプリメント(9)' as product
-  UNION ALL SELECT '99999999999999900.123' as number, 'xxx' as product
+  sql: SELECT '1127.920000' as number, 1127.920000 as int,'風邪薬(1)' as product
+  UNION ALL SELECT '1039.920000' as number, 1039.920000 as int,'衛生管理(2)' as product
+  UNION ALL SELECT '366300.000000' as number, 366300.000000 as int,'日用品(12)' as product
+  UNION ALL SELECT '7774.000000' as number, 7774.000000 as int,'冷凍食品(31)' as product
+  UNION ALL SELECT '1.55000000' as number, 1.55000000 as int, 'ベビー(4)' as product
+  UNION ALL SELECT '1.25' as number, 1.25 as int, 'ペット用品(5)' as product
+  UNION ALL SELECT '1.0' as number, 1.0 as int,'プロティン(8)' as product
+  UNION ALL SELECT '1.05' as number, 6435234241236234543254.123 as int,'チョコレート(56)' as product
+  UNION ALL SELECT '11.05' as number, 12321 as int,'ソフトドリンク(102)' as product
+  UNION ALL SELECT '20.50' as number, 9999999999999990011.123 as int, 'サプリメント(9)' as product
+  UNION ALL SELECT '99999999999999900.123' as number, 99999999999999900.123 as int, 'xxx' as product
   ;;
 }
   dimension: test_row {
@@ -55,6 +55,14 @@ dimension: num {
   sql: ${TABLE}.number ;;
 }
 
+dimension: int {
+  type: number
+  sql: ${TABLE}.int ;;
+}
+measure: sum {
+  type: sum
+  sql: ${int} ;;
+}
 dimension: product {}
 
 dimension: prod_num {
